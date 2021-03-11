@@ -7,6 +7,12 @@ from tensorflow.keras import models
 from tensorflow.keras.preprocessing.image import load_img
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.applications.resnet import preprocess_input
+import pandas as pd
+import json
+import time
+from threading import Event
+import sys
+from progress.bar import Bar
 categories = [b'apple_pie',b'baby_back_ribs',b'baklava',b'beef_carpaccio',b'beef_tartare',b'beet_salad',b'beignets',b'bibimbap',
  b'bread_pudding',b'breakfast_burrito',b'bruschetta',b'caesar_salad',b'cannoli',b'caprese_salad',b'carrot_cake',b'ceviche',b'cheese_plate',
  b'cheesecake',b'chicken_curry',b'chicken_quesadilla',b'chicken_wings',b'chocolate_cake',b'chocolate_mousse',
@@ -19,6 +25,16 @@ categories = [b'apple_pie',b'baby_back_ribs',b'baklava',b'beef_carpaccio',b'beef
  b'red_velvet_cake',b'risotto',b'samosa',b'sashimi',b'scallops',b'seaweed_salad',b'shrimp_and_grits',b'spaghetti_bolognese',
  b'spaghetti_carbonara',b'spring_rolls',b'steak',b'strawberry_shortcake',b'sushi',b'tacos',b'takoyaki',b'tiramisu',b'tuna_tartare',b'waffles']
 
+CSS = """
+h1 {
+    color: red;
+}
+body {
+    background-image: url('file://C:/Users/dani_/Downloads/bacground2.png');
+    background-size: cover;
+}
+"""
+st.write(f'<style>{CSS}</style>', unsafe_allow_html=True)
 def preprocessing_func(image):
     '''Function that preprocesses the input'''
     preproc_img = img_to_array(image)
@@ -38,37 +54,87 @@ def predict_category(model,image):
     category_sample = np.argmax(prediction)
     category_name_sample = categories[category_sample]
     category_name_sample = category_name_sample.decode('UTF-8').capitalize().replace("_", " ")
-    category_name_sample
     return category_name_sample
 
 def get_api_info(category_name_sample):
     """Function to get the api information"""
     api_url = 'https://api.calorieninjas.com/v1/nutrition?query='
-    query = f'100g {category_name_sample}'
+    query = '100g {}'.format(category_name_sample)
     response = requests.get(api_url + query, headers={'X-Api-Key': 'Xy0klDLLr8umMOU3GBTv8g==ixVHYHMXsQA3CJT7'})
     if response.status_code == requests.codes.ok:
-        return print(response.text)
+       
+        return response.text
     else:
-        return print("Error:", response.status_code, response.text)
 
+        return 'Error'
 
+def convert_data(api_info):
+  df = pd.DataFrame.from_dict(api_info['items'][0], orient='index').T
+  df = df[['name','sugar_g', 'fiber_g', 'serving_size_g', 'sodium_mg', 
+        'potassium_mg', 'fat_saturated_g', 'fat_total_g', 'calories',
+        'cholesterol_mg', 'protein_g', 'carbohydrates_total_g']]
+  df.columns = ['Name','Sugar', 'Fiber', 'Serving Size', 'Sodium', 
+        'Potassium', 'Fat Saturated', 'Fat Total', 'Calories',
+        'Cholesterol', 'Protein', 'TotalCarbohydrates']
+  Sugar = df['Sugar'][0]
+  Fiber = df['Fiber'][0]
+  Serving_Size = df['Serving Size'][0]
+  Sodium = df['Sodium'][0]
+  Potassium = df['Potassium'][0]
+  Fat_Saturated = df['Fat Saturated'][0]
+  Fat_Total = df['Fat Total'][0]
+  Cholesterol = df['Cholesterol'][0]
+  Protein = df['Protein'][0]
+  TotalCarbohydrates = df['TotalCarbohydrates'][0]
+  df['Sugar'] = f'{Sugar}g'
+  df['Fiber'] = f'{Fiber}g'
+  df['Serving Size'] = f'{Serving_Size}g'
+  df['Sodium'] = f'{Sodium}mg'
+  df['Potassium'] = f'{Potassium}mg'
+  df['Fat Saturated'] = f'{Fat_Saturated}g'
+  df['Fat Total'] = f'{Fat_Total}g'
+  df['Cholesterol'] = f'{Cholesterol}g'
+  df['Protein'] = f'{Protein}g'
+  df['TotalCarbohydrates'] = f'{TotalCarbohydrates}g'
+  df = df.drop(columns = 'Name')
+  df_t = df.T
+  df_t.columns = [''] 
+  return df_t
 
-st.markdown("""# Food Detective
-## Upload a photo 
-Use format .jpg""")
-uploaded_file = st.file_uploader("Choose an image...", type="jpg")
-if uploaded_file is not None:
-    image = Image.open(uploaded_file)
-    st.image(image, caption='Uploaded Image.', use_column_width=True)
-    st.write("")
-    st.write("Classifying...")
-    #linea para hace predict
-    model = download_model()
-    imagen = preprocessing_func(image)
-    category_name_sample = predict_category(model,imagen)
-    api_info = get_api_info(category_name_sample)
-    st.write(api_info)
-    """your photo is uplod :)"""
+url = 'https://res.cloudinary.com/sanitarium/image/fetch/q_auto/https://www.sanitarium.com.au/getmedia%2Fae51f174-984f-4a70-ad3d-3f6b517b6da1%2Ffruits-vegetables-healthy-fats.jpg%3Fwidth%3D1180%26height%3D524%26ext%3D.jpg'
+st.image(url, width=None, use_column_width=None, clamp=False, channels='RGB', output_format='auto')
+st.markdown('''# Hi! Welcome to Food Detective :green_salad: :mag: :eyes:''')
+'Upload a photo of your meal to know about its nutritional information!'
+
+with st.beta_expander("Search image..."):
+    uploaded_file = st.file_uploader("Choose an image...", type=['png', 'jpg', 'jpeg'])
+    if uploaded_file is not None:
+        imagen = Image.open(uploaded_file)
+        st.image(imagen, use_column_width=True)
+        new_width  = 64
+        new_height = 64
+        imagen = imagen.resize((new_width, new_height), Image.ANTIALIAS)
+        st.write("")
+        #linea para hace predict
+        'Classifying your meal...'
+        imagen = preprocessing_func(imagen)
+        my_bar = st.progress(0)
+        model = download_model()
+        for percent_complete in range(100):
+            time.sleep(0.1)
+            my_bar.progress(percent_complete + 1)
+        'Analyzing...'
+        st.balloons()
+        ':white_check_mark: Ready! You are having...'
+        category_name_sample = predict_category(model,imagen)
+        f' Your Food is: **{category_name_sample}**'
+        api_info = get_api_info(category_name_sample)
+        api_info = get_api_info(category_name_sample)
+        api_info_text = get_api_info(category_name_sample)
+        api_info = json.loads(api_info_text)
+        api_info = convert_data(api_info)
+        st.write(api_info)
+
 
 
 
