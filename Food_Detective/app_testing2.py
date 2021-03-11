@@ -1,4 +1,5 @@
 import streamlit as st
+from PIL import Image
 import requests
 import h5py
 import numpy as np
@@ -6,19 +7,10 @@ from tensorflow.keras import models
 from tensorflow.keras.preprocessing.image import load_img
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.applications.resnet import preprocess_input
-from memoized_property import memoized_property
-
-'''
-# Hi! Welcome to food recognition!
-Please upload a photo of your meal to get information about its nutritional quality!'''
-
-photo = st.file_uploader('Try to get a clean and neat photo!', type=['png', 'jpg', 'jpeg'])
-if not photo:
-    st.warning('Please input a photo.')
-    st.stop()
-st.success('Thank you for inputting a photo.')
-
-st.image(photo, caption='This is my meal')
+import time
+from threading import Event
+import sys
+from progress.bar import Bar
 
 
 categories = [b'apple_pie',
@@ -130,17 +122,13 @@ def preprocessing_func(image):
     preproc_img = preprocess_input(preproc_img)
     return preproc_img
 
-# @memoized_property
 def download_model():
     """Function that downloads the model"""
-    # path = '/home/tomas/code/tomasaltilio/Food_Detective/ResNET_acc32'
-    path = 'gs://food-models-le-wagon/ResNET_acc32/'
-    model = models.load_model(path)
-    return model
+    path = '../ResNET_acc32'
+    model_1 = models.load_model(path)
+    return model_1
 
-
-
-def predict_category(model, image):
+def predict_category(model,image):
     """Function that predicts the category of the image"""
     prediction = model.predict(image)
     category_sample = np.argmax(prediction)
@@ -159,17 +147,35 @@ def get_api_info(category_name_sample):
         return response.text
     else:
         print("Error:", response.status_code, response.text)
-    
+
     print(response.text)
+url = 'https://res.cloudinary.com/sanitarium/image/fetch/q_auto/https://www.sanitarium.com.au/getmedia%2Fae51f174-984f-4a70-ad3d-3f6b517b6da1%2Ffruits-vegetables-healthy-fats.jpg%3Fwidth%3D1180%26height%3D524%26ext%3D.jpg'
+st.image(url, width=None, use_column_width=None, clamp=False, channels='RGB', output_format='auto')
+st.markdown('''# Hi! Welcome to Food Detective :green_salad: :mag: :eyes:''')
 
+'Upload a photo of your meal to know about its nutritional information!'
 
-
-model = download_model()
-imagen = load_img('/home/tomas/code/tomasaltilio/Food_Detective/donut.jpeg', color_mode='rgb', target_size=(64,64,3))
-preproc_image = preprocessing_func(imagen)
-category_name_sample = predict_category(model, preproc_image)
-get_api_info = get_api_info(category_name_sample)
-get_api_info
-
-
-# http://food-models-le-wagon.storage.googleapis.com/ResNET_acc32
+with st.beta_expander("Search image..."):
+    uploaded_file = st.file_uploader("Choose an image...", type=['png', 'jpg', 'jpeg'])
+    if uploaded_file is not None:
+        imagen = Image.open(uploaded_file)
+        st.image(imagen, use_column_width=True)
+        new_width  = 64
+        new_height = 64
+        imagen = imagen.resize((new_width, new_height), Image.ANTIALIAS)
+        st.write("")
+        #linea para hace predict
+        'Classifying your meal...'
+        imagen = preprocessing_func(imagen)
+        my_bar = st.progress(0)
+        model = download_model()
+        for percent_complete in range(100):
+            time.sleep(0.1)
+            my_bar.progress(percent_complete + 1)
+        'Analyzing...'
+        st.balloons()
+        ':white_check_mark: Ready! You are having...'
+        category_name_sample = predict_category(model,imagen)
+        api_info = get_api_info(category_name_sample)
+        st.write(api_info)
+        #api_info
