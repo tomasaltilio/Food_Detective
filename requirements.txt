@@ -30,7 +30,7 @@ six>=1.14
 joblib
 memoized-property
 termcolor
-PIL
+PIL==1.1.7
 
 # app building
 streamlit
