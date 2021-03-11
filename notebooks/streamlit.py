@@ -30,7 +30,7 @@ h1 {
     color: red;
 }
 body {
-    background-image: url('file://C:/Users/dani_/Downloads/bacground2.png');
+    background-image: url(https://raw.githubusercontent.com/tomasaltilio/Food_Detective/test_movile/notebooks/bacground2.png);
     background-size: cover;
 }
 """
@@ -76,6 +76,8 @@ def convert_data(api_info):
   df.columns = ['Name','Sugar', 'Fiber', 'Serving Size', 'Sodium', 
         'Potassium', 'Fat Saturated', 'Fat Total', 'Calories',
         'Cholesterol', 'Protein', 'TotalCarbohydrates']
+  return df
+def add_statement(df):     
   Sugar = df['Sugar'][0]
   Fiber = df['Fiber'][0]
   Serving_Size = df['Serving Size'][0]
@@ -98,8 +100,48 @@ def convert_data(api_info):
   df['TotalCarbohydrates'] = f'{TotalCarbohydrates}g'
   df = df.drop(columns = 'Name')
   df_t = df.T
-  df_t.columns = [''] 
+  df_t.columns = ['Amount per Portion'] 
   return df_t
+def warnings(df):
+    df = pd.DataFrame.from_dict(df['items'][0], orient='index').T
+    if df['sugar_g'][0]>50:
+        value = round(df["sugar_g"][0]/0.25,ndigits=2)
+        st.error(f"This food contains {value}% of the daily sugar intake")
+    elif df['fiber_g'][0]>50:
+        value = round(df["fiber_g"][0]/0.25,ndigits=2)
+        st.error(f"This food contains {value}% of the daily fiber intake")
+    elif df['serving_size_g'][0]>50:
+        value = round(df["serving_size_g"][0]/0.25,ndigits=2)
+        st.error(f"This food contains {value}% of the daily serving size intake")    
+    elif df['sodium_mg'][0]>50:
+        value = round(df["sodium_mg"][0]/0.25,ndigits=2)
+        st.error(f"This food contains {value}% of the daily sodium intake")
+    elif df['potassium_mg'][0]>50:
+        value = round(df["potassium_mg"][0]/0.25,ndigits=2)
+        st.error(f"This food contains {value}% of the daily potassium intake")
+    elif df['fat_saturated_g'][0]>50:
+        value = round(df["fat_saturated_g"][0]/0.25,ndigits=2)
+        st.error(f"This food contains {value}% of the daily fat saturated intake")
+    elif df['fat_total_g'][0]>50:
+        value = round(df["fat_total_g"][0]/0.25,ndigits=2)
+        st.error(f"This food contains {value}% of the daily total fat intake")
+    elif df['calories'][0]>50:
+        value = round(df["calories"][0]/0.25,ndigits=2)
+        st.error(f"This food contains {value}% of the daily calories intake")
+    elif df['cholesterol_mg'][0]>50:
+        value = round(df["cholesterol_mg"][0]/0.25,ndigits=2)
+        st.error(f"This food contains {value}% of the daily cholesterol intake")
+    elif df['protein_g'][0]>50:
+        value = round(df["protein_g"][0]/0.25,ndigits=2)
+        st.error(f"This food contains {value}% of the daily protein intake")
+    elif df['carbohydrates_total_g'][0]>50:
+        value = round(df["carbohydrates_total_g"][0]/0.25,ndigits=2)
+        st.error(f"This food contains {value}% of the daily total carbohydrates intake")
+    else:
+        st.success('This is a success!')
+
+
+
 
 url = 'https://res.cloudinary.com/sanitarium/image/fetch/q_auto/https://www.sanitarium.com.au/getmedia%2Fae51f174-984f-4a70-ad3d-3f6b517b6da1%2Ffruits-vegetables-healthy-fats.jpg%3Fwidth%3D1180%26height%3D524%26ext%3D.jpg'
 st.image(url, width=None, use_column_width=None, clamp=False, channels='RGB', output_format='auto')
@@ -131,10 +173,11 @@ with st.beta_expander("Search image..."):
         api_info = get_api_info(category_name_sample)
         api_info = get_api_info(category_name_sample)
         api_info_text = get_api_info(category_name_sample)
-        api_info = json.loads(api_info_text)
-        api_info = convert_data(api_info)
-        st.write(api_info)
-
+        df_api = json.loads(api_info_text)
+        api_info = convert_data(df_api)
+        api_info_transformed = add_statement(api_info)
+        st.write(api_info_transformed)
+        warnings(df_api)
 
 
 
