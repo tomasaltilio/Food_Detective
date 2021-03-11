@@ -8,9 +8,7 @@ from tensorflow.keras.preprocessing.image import load_img
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.applications.resnet import preprocess_input
 import time
-from threading import Event
 import sys
-from progress.bar import Bar
 
 
 categories = [b'apple_pie',
