@@ -2,14 +2,14 @@
 pip>=9
 setuptools>=26
 twine
-wheel>=0.29
+wheel==0.35
 
 # data science
 numpy
 pandas
 scikit-learn
 tensorflow
-h5py
+h5py==2.10.0
 
 # tests/linter
 black
@@ -30,6 +30,7 @@ six>=1.14
 joblib
 memoized-property
 termcolor
+Pillow
 
 # app building
 streamlit
