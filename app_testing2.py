@@ -122,7 +122,7 @@ def preprocessing_func(image):
 
 def download_model():
     """Function that downloads the model"""
-    path = '../ResNET_acc32'
+    path = 'ResNET_acc32'
     model_1 = models.load_model(path)
     return model_1
 
