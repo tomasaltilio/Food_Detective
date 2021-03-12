@@ -1,12 +1,11 @@
 # packaging
-pip>=9
-setuptools>=26
+
 
 # data science
 numpy
 pandas
 tensorflow
-h5py==2.10.0
+
 
 # tests/linter
 

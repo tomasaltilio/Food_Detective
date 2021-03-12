@@ -1,7 +1,6 @@
 import streamlit as st
 from PIL import Image
 import requests
-import h5py
 import numpy as np
 from tensorflow.keras import models
 from tensorflow.keras.preprocessing.image import load_img
