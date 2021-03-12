@@ -4,7 +4,7 @@
 # data science
 numpy
 pandas
-tensorflow
+tensorflow-cpu
 
 
 # tests/linter
