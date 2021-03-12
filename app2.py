@@ -1,6 +1,7 @@
 import streamlit as st
 from PIL import Image
 import requests
+import h5py
 import numpy as np
 from tensorflow.keras import models
 from tensorflow.keras.preprocessing.image import load_img
@@ -134,7 +135,7 @@ def preprocessing_func(image):
 
 def download_model():
     """Function that downloads the model"""
-    path = '../ResNET_acc32'
+    path = 'ResNET_acc32'
     model_1 = models.load_model(path)
     return model_1
 
@@ -169,30 +170,31 @@ def convert_data(api_info):
                 'Cholesterol', 'Protein', 'TotalCarbohydrates']
     return df
 
-def add_statement(df):
-    Sugar = df['Sugar'][0]
-    Fiber = df['Fiber'][0]
-    Serving_Size = df['Serving Size'][0]
-    Sodium = df['Sodium'][0]
-    Potassium = df['Potassium'][0]
-    Fat_Saturated = df['Fat Saturated'][0]
-    Fat_Total = df['Fat Total'][0]
-    Cholesterol = df['Cholesterol'][0]
-    Protein = df['Protein'][0]
-    TotalCarbohydrates = df['TotalCarbohydrates'][0]
-    df['Sugar'] = f'{Sugar}g'
-    df['Fiber'] = f'{Fiber}g'
-    df['Serving Size'] = f'{Serving_Size}g'
-    df['Sodium'] = f'{Sodium}mg'
-    df['Potassium'] = f'{Potassium}mg'
-    df['Fat Saturated'] = f'{Fat_Saturated}g'
-    df['Fat Total'] = f'{Fat_Total}g'
-    df['Cholesterol'] = f'{Cholesterol}g'
-    df['Protein'] = f'{Protein}g'
-    df['TotalCarbohydrates'] = f'{TotalCarbohydrates}g'
-    df_t = df.T
-    df_t.columns = ['']
-    return df_t
+def add_statement(df):     
+  Sugar = df['Sugar'][0]
+  Fiber = df['Fiber'][0]
+  Serving_Size = df['Serving Size'][0]
+  Sodium = df['Sodium'][0]
+  Potassium = df['Potassium'][0]
+  Fat_Saturated = df['Fat Saturated'][0]
+  Fat_Total = df['Fat Total'][0]
+  Cholesterol = df['Cholesterol'][0]
+  Protein = df['Protein'][0]
+  TotalCarbohydrates = df['TotalCarbohydrates'][0]
+  df['Sugar'] = f'{Sugar}g'
+  df['Fiber'] = f'{Fiber}g'
+  df['Serving Size'] = f'{Serving_Size}g'
+  df['Sodium'] = f'{Sodium}mg'
+  df['Potassium'] = f'{Potassium}mg'
+  df['Fat Saturated'] = f'{Fat_Saturated}g'
+  df['Fat Total'] = f'{Fat_Total}g'
+  df['Cholesterol'] = f'{Cholesterol}g'
+  df['Protein'] = f'{Protein}g'
+  df['TotalCarbohydrates'] = f'{TotalCarbohydrates}g'
+  df = df.drop(columns = 'Name')
+  df_t = df.T
+  df_t.columns = ['Amount per Portion'] 
+  return df_t
 
 def warnings(df):
     df = pd.DataFrame.from_dict(df['items'][0], orient='index').T
@@ -256,12 +258,10 @@ with st.beta_expander("Search image..."):
         st.success(':white_check_mark: Done! You are having...')
         category_name_sample = predict_category(model,imagen)
         f'**{category_name_sample}**!'
-        api_info = get_api_info(category_name_sample)
-        api_info = get_api_info(category_name_sample)
         api_info_text = get_api_info(category_name_sample)
         df_api = json.loads(api_info_text)
         api_info = convert_data(df_api)
         api_info_transformed = add_statement(api_info)
-        st.write(api_info)
+        st.write(api_info_transformed)
         warnings(df_api)
 
