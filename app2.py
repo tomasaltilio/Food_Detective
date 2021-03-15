@@ -13,13 +13,13 @@ import sys
 import pandas as pd
 import json
 
-
+# Background image
 CSS = """
     h1 {
     color: black;
     }
     body {
-    background-image: url(https://raw.githubusercontent.com/tomasaltilio/Food_Detective/test_movile/notebooks/bacground2.png);
+    background-image: url(https://scontent.faep8-1.fna.fbcdn.net/v/t1.0-9/118764930_137029078090158_291676113316331324_o.jpg?_nc_cat=105&ccb=1-3&_nc_sid=e3f864&_nc_ohc=LRcKIE6_Hs8AX9XzwIO&_nc_ht=scontent.faep8-1.fna&oh=289cff6da615877c55a279de7ddffcd6&oe=60769602);
     background-size: cover;
     }
     """
@@ -202,10 +202,10 @@ def warnings_men_young(df):
     df = pd.DataFrame.from_dict(df['items'][0], orient='index').T
     if df['sugar_g'][0]>(38/4):
         value_sugar = round(df["sugar_g"][0],ndigits=2)
-        f'warning: Sugar: You are having more than the sugar levels recommended per meal. You should take 38 grams  per day, but careful, your meal already has {value_sugar} grams of sugar!'
+        f':warning: Sugar: You are having more than the sugar levels recommended per meal. You should take 38 grams  per day, but careful, your meal already has {value_sugar} grams of sugar!'
     if df['fiber_g'][0]>(35/4):
         value_fiber = round(df["fiber_g"],ndigits=2)
-        f'warning: Fiber: You are having more than the fiber  levels recommended per meal. You should take 35 grams  per day, but careful, your meal already has {value_fiber} grams of fat!'
+        f':warning: Fiber: You are having more than the fiber  levels recommended per meal. You should take 35 grams  per day, but careful, your meal already has {value_fiber} grams of fat!'
     if df['sodium_mg'][0]>(2.3/4):
         value_sodium = round(df["sodium_mg"][0]/0.25,ndigits=2)
         f':warning: Sodium: You are having more than the saturated sodium levels recommended per meal. You should take 2.3 grams per day, but careful, your meal already has {value_sodium} grams of sodium! '
@@ -237,10 +237,10 @@ def warnings_men_old(df):
     df = pd.DataFrame.from_dict(df['items'][0], orient='index').T
     if df['sugar_g'][0]>(38/4):
         value_sugar = round(df["sugar_g"][0],ndigits=2)
-        f'warning: Sugar: You are having more than the sugar levels recommended per meal. You should take 38 grams  per day, but careful, your meal already has {value_sugar} grams of sugar!'
+        f':warning: Sugar: You are having more than the sugar levels recommended per meal. You should take 38 grams  per day, but careful, your meal already has {value_sugar} grams of sugar!'
     if df['fiber_g'][0]>(35/4):
         value_fiber = round(df["fiber_g"],ndigits=2)
-        f'warning: Fiber: You are having more than the fiber  levels recommended per meal. You should take 35 grams  per day, but careful, your meal already has {value_fiber} grams of fat!'
+        f':warning: Fiber: You are having more than the fiber  levels recommended per meal. You should take 35 grams  per day, but careful, your meal already has {value_fiber} grams of fat!'
     if df['sodium_mg'][0]>(1.5/4):
         value_sodium = round(df["sodium_mg"][0]/0.25,ndigits=2)
         f':warning: Sodium: You are having more than the saturated sodium levels recommended per meal. You should take 2.3 grams per day, but careful, your meal already has {value_sodium} grams of sodium! '
@@ -272,10 +272,10 @@ def warnings_women_old(df):
     df = pd.DataFrame.from_dict(df['items'][0], orient='index').T
     if df['sugar_g'][0]>(38/4):
         value_sugar = round(df["sugar_g"][0],ndigits=2)
-        f'warning: Sugar: You are having more than the sugar levels recommended per meal. You should take 38 grams  per day, but careful, your meal already has {value_sugar} grams of sugar!'
+        f':warning: Sugar: You are having more than the sugar levels recommended per meal. You should take 38 grams  per day, but careful, your meal already has {value_sugar} grams of sugar!'
     if df['fiber_g'][0]>(35/4):
         value_fiber = round(df["fiber_g"],ndigits=2)
-        f'warning: Fiber: You are having more than the fiber  levels recommended per meal. You should take 35 grams  per day, but careful, your meal already has {value_fiber} grams of fat!'
+        f':warning: Fiber: You are having more than the fiber  levels recommended per meal. You should take 35 grams  per day, but careful, your meal already has {value_fiber} grams of fat!'
     if df['sodium_mg'][0]>(1.5/4):
         value_sodium = round(df["sodium_mg"][0]/0.25,ndigits=2)
         f':warning: Sodium: You are having more than the saturated sodium levels recommended per meal. You should take 2.3 grams per day, but careful, your meal already has {value_sodium} grams of sodium! '
@@ -308,10 +308,10 @@ def warnings_women_young(df):
     df = pd.DataFrame.from_dict(df['items'][0], orient='index').T
     if df['sugar_g'][0]>(38/4):
         value_sugar = round(df["sugar_g"][0],ndigits=2)
-        f'warning: Attention! You are having more than the sugar levels recommended per meal. You should take 38 grams  per day, but careful, your meal already has {value_sugar} grams of sugar!'
+        f':warning: Attention! You are having more than the sugar levels recommended per meal. You should take 38 grams  per day, but careful, your meal already has {value_sugar} grams of sugar!'
     if df['fiber_g'][0]>(35/4):
         value_fiber = round(df["fiber_g"],ndigits=2)
-        f'warning: Attention! You are having more than the fiber  levels recommended per meal. You should take 35 grams  per day, but careful, your meal already has {value_fiber} grams of fat!'
+        f':warning: Attention! You are having more than the fiber  levels recommended per meal. You should take 35 grams  per day, but careful, your meal already has {value_fiber} grams of fat!'
     if df['sodium_mg'][0]>(2.3/4):
         value_sodium = round(df["sodium_mg"][0]/0.25,ndigits=2)
         f':warning: Sodium: You are having more than the saturated sodium levels recommended per meal. You should take 2.3 grams per day, but careful, your meal already has {value_sodium} grams of sodium! '
@@ -359,9 +359,8 @@ calorie_ninjas_logo = st.sidebar.markdown(
 st.title('''Hi! Welcome to Food Detective :green_salad: :mag: :eyes:''')
 st.subheader('Upload a photo of your meal to know about its nutritional information!:memo:')
 st.text('First we need some personal information:')
-
+# User inputs
 gender = st.radio('Gender:',('Male', 'Female'))
-
 age = st.slider('Age:', 0, 100, 15)
 weight = st.text_input('Weight (kg):', '')
 
