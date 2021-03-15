@@ -7,6 +7,7 @@ from tensorflow.keras import models
 from tensorflow.keras.preprocessing.image import load_img
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.applications.resnet import preprocess_input
+import tensorflow.keras.backend as K
 import time
 import sys
 import pandas as pd
@@ -133,11 +134,14 @@ def preprocessing_func(image):
     preproc_img = preprocess_input(preproc_img)
     return preproc_img
 
+@st.cache(allow_output_mutation=True, show_spinner=False)
 def download_model():
     """Function that downloads the model"""
     path = 'EfficientNet_acc39.h5'
-    model_1 = models.load_model(path)
-    return model_1
+    model = models.load_model(path)
+    model.make_predict_function()
+    model.summary()
+    return model
 
 def predict_category(model,image):
     """Function that predicts the category of the image"""
@@ -194,73 +198,144 @@ def add_statement(df):
     df_t.columns = ['']
     return df_t
 
-def warnings_men(df):
+def warnings_men_young(df):
     df = pd.DataFrame.from_dict(df['items'][0], orient='index').T
-    if df['sugar_g'][0]>(36/4):
-        value = round(df["sugar_g"][0],ndigits=2)
-        ":warning: Attention! You are having more than the sugar levels recommended per meal "
-    if df['fiber_g'][0]>(38/4):
-        value = round(df["fiber_g"][0]/0.25,ndigits=2)
-        ":warning: Attention! You are having more than the fiber levels recommended per meal "
+    if df['sugar_g'][0]>(38/4):
+        value_sugar = round(df["sugar_g"][0],ndigits=2)
+        f'warning: Sugar: You are having more than the sugar levels recommended per meal. You should take 38 grams  per day, but careful, your meal already has {value_sugar} grams of sugar!'
+    if df['fiber_g'][0]>(35/4):
+        value_fiber = round(df["fiber_g"],ndigits=2)
+        f'warning: Fiber: You are having more than the fiber  levels recommended per meal. You should take 35 grams  per day, but careful, your meal already has {value_fiber} grams of fat!'
     if df['sodium_mg'][0]>(2.3/4):
-        value = round(df["sodium_mg"][0]/0.25,ndigits=2)
-        ":warning: Attention! You are having more than the sodium levels recommended per meal "
+        value_sodium = round(df["sodium_mg"][0]/0.25,ndigits=2)
+        f':warning: Sodium: You are having more than the saturated sodium levels recommended per meal. You should take 2.3 grams per day, but careful, your meal already has {value_sodium} grams of sodium! '
     if df['potassium_mg'][0]>(4.7/4):
         value = round(df["potassium_mg"][0]/0.25,ndigits=2)
-        ":warning: Attention! You are having more than the potassium levels recommended per meal "
-    if df['fat_saturated_g'][0]>(22/4):
-        value = round(df["fat_saturated_g"][0]/0.25,ndigits=2)
-        ":warning: Attention! You are having more than the saturated fat levels recommended per meal "
-    if df['fat_total_g'][0]>(77/4):
-        value = round(df["fat_total_g"][0]/0.25,ndigits=2)
-        ":warning: Attention! You are having more than the total fat levels recommended per meal "
-    if df['calories'][0]>(2500/4):
-        value = round(df["calories"][0]/0.25,ndigits=2)
-        ":warning: Attention! You are having more than the calories levels recommended per meal "
+        ":warning: Potassium: You are having more than the potassium levels recommended per meal "
+    if df['fat_saturated_g'][0]>(27/4):
+        value_satfat = round(df["fat_saturated_g"][0]/0.25,ndigits=2)
+        f':warning: Attention! You are having more than the saturated fat levels recommended per meal. You should take 27 grams per day, but careful, your meal already has {value_satfat} grams of saturated fat!'
+    if df['fat_total_g'][0]>(88/4):
+        value_fat = round(df["fat_total_g"][0]/0.25,ndigits=2)
+        f':warning: Fat: You are having more than the total fat levels recommended per meal. You should take 88 grams  per day, but careful, your meal already has {value_fat} grams of fat! '
+    if df['calories'][0]>(2700/4):
+        value = round(df["calories"][0],ndigits=2)
+        f':warning: Calories: You are having more than the calories levels recommended per meal. You should take 675 calories per meal if you are making 4 meals per day. "'
     if df['cholesterol_mg'][0]>(0.3/4):
-        value = round(df["cholesterol_mg"][0]/0.25,ndigits=2)
-        ":warning: Attention! You are having more than the cholesterol level recommended per meal "
-#    if df['protein_g'][0]>(0.8*weight/2):
-#        value = round(df["protein_g"][0]/0.25,ndigits=2)
-#        st.error(f"Attention! You are having more than the protein levels recommended per meal ")
-    if df['carbohydrates_total_g'][0]>(300/4):
-        value = round(df["carbohydrates_total_g"][0]/0.25,ndigits=2)
-        ":warning: Attention! You are having more than the carbohydrate levels recommended per meal "
+        value_chol = round(df["cholesterol_mg"][0]/0.25,ndigits=2)
+        f':warning: Cholesterol: You are having more than the cholesterol levels recommended per meal. You should take 0.3 grams  per day, but careful, your meal already has {value_chol} grams of cholesterol! '
+    if df['protein_g'][0]>(63/4):
+        value_protein = round(df["protein_g"][0],ndigits=2)
+        f':warning:  Protein: You are having more than the protein levels recommended per meal. You should take 63g  per day, but your meal already has {value_protein} grams of protein.'
+    if df['carbohydrates_total_g'][0]>(410/4):
+        value_carbs = round(df["carbohydrates_total_g"][0],ndigits=2)
+        f':warning: Carbohydrates: You are having more than the carbohydrate levels recommended per meal. You should take 410g  per day, but your meal already has {value_carbs} grams of protein.'
     else:
         'The rest of the levels are just ok :muscle:!'
 
-def warnings_women(df):
+def warnings_men_old(df):
     df = pd.DataFrame.from_dict(df['items'][0], orient='index').T
-    if df['sugar_g'][0]>(25/4):
-        value = round(df["sugar_g"][0],ndigits=2)
-        ":warning: Attention! You are having more than the sugar levels recommended per meal "
-    if df['fiber_g'][0]>25/4:
-        value = round(df["fiber_g"][0]/0.25,ndigits=2)
-        ":warning: Attention! You are having more than the fiber levels recommended per meal "
-    if df['sodium_mg'][0]>(2.3/4):
-        value = round(df["sodium_mg"][0]/0.25,ndigits=2)
-        ":warning: Attention! You are having more than the sodium levels recommended per meal "
+    if df['sugar_g'][0]>(38/4):
+        value_sugar = round(df["sugar_g"][0],ndigits=2)
+        f'warning: Sugar: You are having more than the sugar levels recommended per meal. You should take 38 grams  per day, but careful, your meal already has {value_sugar} grams of sugar!'
+    if df['fiber_g'][0]>(35/4):
+        value_fiber = round(df["fiber_g"],ndigits=2)
+        f'warning: Fiber: You are having more than the fiber  levels recommended per meal. You should take 35 grams  per day, but careful, your meal already has {value_fiber} grams of fat!'
+    if df['sodium_mg'][0]>(1.5/4):
+        value_sodium = round(df["sodium_mg"][0]/0.25,ndigits=2)
+        f':warning: Sodium: You are having more than the saturated sodium levels recommended per meal. You should take 2.3 grams per day, but careful, your meal already has {value_sodium} grams of sodium! '
     if df['potassium_mg'][0]>(4.7/4):
         value = round(df["potassium_mg"][0]/0.25,ndigits=2)
-        ":warning: Attention! You are having more than the potassium levels recommended per meal "
-    if df['fat_saturated_g'][0]>(22/4):
-        value = round(df["fat_saturated_g"][0]/0.25,ndigits=2)
-        ":warning: Attention! You are having more than the saturated fat levels recommended per meal "
-    if df['fat_total_g'][0]>(77/4):
-        value = round(df["fat_total_g"][0]/0.25,ndigits=2)
-        ":warning: Attention! You are having more than the total fat levels recommended per meal "
-    if df['calories'][0]>(2000/4):
-        value = round(df["calories"][0]/0.25,ndigits=2)
-        ":warning: Attention! You are having more than the calories levels recommended per meal "
+        ":warning: Potassium: You are having more than the potassium levels recommended per meal "
+    if df['fat_saturated_g'][0]>(25/4):
+        value_satfat = round(df["fat_saturated_g"][0]/0.25,ndigits=2)
+        f':warning: Saturated fat: You are having more than the saturated fat levels recommended per meal. You should take 27 grams per day, but careful, your meal already has {value_satfat} grams of saturated fat!'
+    if df['fat_total_g'][0]>(83/4):
+        value_fat = round(df["fat_total_g"][0]/0.25,ndigits=2)
+        f':warning: Total fat: You are having more than the total fat levels recommended per meal. You should take 88 grams  per day, but careful, your meal already has {value_fat} grams of fat! '
+    if df['calories'][0]>(2500/4):
+        value = round(df["calories"][0],ndigits=2)
+        f':warning: Calories: You are having more than the calories levels recommended per meal. You should take 675 calories per meal if you are making 4 meals per day. "'
     if df['cholesterol_mg'][0]>(0.3/4):
-        value = round(df["cholesterol_mg"][0]/0.25,ndigits=2)
-        ":warning: Attention! You are having more than the cholesterol level recommended per meal "
-#    if df['protein_g'][0]>():
-#        value = round(df["protein_g"][0]/0.25,ndigits=2)
-#        st.error(f"Attention! You are having more than the protein levels recommended per meal ")
-    if df['carbohydrates_total_g'][0]>(300/4):
-        value = round(df["carbohydrates_total_g"][0]/0.25,ndigits=2)
-        ":warning: Attention! You are having more than the carbohydrate levels recommended per meal "
+        value_chol = round(df["cholesterol_mg"][0]/0.25,ndigits=2)
+        f':warning: Cholesterol: You are having more than the cholesterol levels recommended per meal. You should take 0.3 grams  per day, but careful, your meal already has {value_chol} grams of cholesterol! '
+    if df['protein_g'][0]>(60/4):
+        value_protein = round(df["protein_g"][0],ndigits=2)
+        f':warning:  Proteins:  You are having more than the protein levels recommended per meal. You should take 63g  per day, but your meal already has {value_protein} grams of protein.'
+    if df['carbohydrates_total_g'][0]>(375/4):
+        value_carbs = round(df["carbohydrates_total_g"][0],ndigits=2)
+        f':warning: Carbohydrates: You are having more than the carbohydrate levels recommended per meal. You should take 410g  per day, but your meal already has {value_carbs} grams of protein.'
+    else:
+        'The rest of the levels are just ok :muscle:!'
+
+def warnings_women_old(df):
+    df = pd.DataFrame.from_dict(df['items'][0], orient='index').T
+    if df['sugar_g'][0]>(38/4):
+        value_sugar = round(df["sugar_g"][0],ndigits=2)
+        f'warning: Sugar: You are having more than the sugar levels recommended per meal. You should take 38 grams  per day, but careful, your meal already has {value_sugar} grams of sugar!'
+    if df['fiber_g'][0]>(35/4):
+        value_fiber = round(df["fiber_g"],ndigits=2)
+        f'warning: Fiber: You are having more than the fiber  levels recommended per meal. You should take 35 grams  per day, but careful, your meal already has {value_fiber} grams of fat!'
+    if df['sodium_mg'][0]>(1.5/4):
+        value_sodium = round(df["sodium_mg"][0]/0.25,ndigits=2)
+        f':warning: Sodium: You are having more than the saturated sodium levels recommended per meal. You should take 2.3 grams per day, but careful, your meal already has {value_sodium} grams of sodium! '
+    if df['potassium_mg'][0]>(4.7/4):
+        value = round(df["potassium_mg"][0]/0.25,ndigits=2)
+        ":warning: Potassium: You are having more than the potassium levels recommended per meal "
+    if df['fat_saturated_g'][0]>(20/4):
+        value_satfat = round(df["fat_saturated_g"][0]/0.25,ndigits=2)
+        f':warning: Saturated fat: You are having more than the saturated fat levels recommended per meal. You should take 27 grams per day, but careful, your meal already has {value_satfat} grams of saturated fat!'
+    if df['fat_total_g'][0]>(65/4):
+        value_fat = round(df["fat_total_g"][0]/0.25,ndigits=2)
+        f':warning: Total fat: You are having more than the total fat levels recommended per meal. You should take 88 grams  per day, but careful, your meal already has {value_fat} grams of fat! '
+    if df['calories'][0]>(2000/4):
+        value = round(df["calories"][0],ndigits=2)
+        f':warning: Calories: You are having more than the calories levels recommended per meal. You should take 675 calories per meal if you are making 4 meals per day. "'
+    if df['cholesterol_mg'][0]>(0.3/4):
+        value_chol = round(df["cholesterol_mg"][0]/0.25,ndigits=2)
+        f':warning: Cholesterol: You are having more than the cholesterol levels recommended per meal. You should take 0.3 grams  per day, but careful, your meal already has {value_chol} grams of cholesterol! '
+    if df['protein_g'][0]>(50/4):
+        value_protein = round(df["protein_g"][0],ndigits=2)
+        f':warning:  Proteins: You are having more than the protein levels recommended per meal. You should take 63g  per day, but your meal already has {value_protein} grams of protein.'
+    if df['carbohydrates_total_g'][0]>(304/4):
+        value_carbs = round(df["carbohydrates_total_g"][0],ndigits=2)
+        f':warning: Carbohydrates: You are having more than the carbohydrate levels recommended per meal. You should take 410g  per day, but your meal already has {value_carbs} grams of protein.'
+    else:
+        'The rest of the levels are just ok :muscle:!'
+
+
+def warnings_women_young(df):
+    df = pd.DataFrame.from_dict(df['items'][0], orient='index').T
+    if df['sugar_g'][0]>(38/4):
+        value_sugar = round(df["sugar_g"][0],ndigits=2)
+        f'warning: Attention! You are having more than the sugar levels recommended per meal. You should take 38 grams  per day, but careful, your meal already has {value_sugar} grams of sugar!'
+    if df['fiber_g'][0]>(35/4):
+        value_fiber = round(df["fiber_g"],ndigits=2)
+        f'warning: Attention! You are having more than the fiber  levels recommended per meal. You should take 35 grams  per day, but careful, your meal already has {value_fiber} grams of fat!'
+    if df['sodium_mg'][0]>(2.3/4):
+        value_sodium = round(df["sodium_mg"][0]/0.25,ndigits=2)
+        f':warning: Sodium: You are having more than the saturated sodium levels recommended per meal. You should take 2.3 grams per day, but careful, your meal already has {value_sodium} grams of sodium! '
+    if df['potassium_mg'][0]>(4.7/4):
+        value = round(df["potassium_mg"][0]/0.25,ndigits=2)
+        ":warning: Potassium: You are having more than the potassium levels recommended per meal "
+    if df['fat_saturated_g'][0]>(20/4):
+        value_satfat = round(df["fat_saturated_g"][0]/0.25,ndigits=2)
+        f':warning: Saturated fat: You are having more than the saturated fat levels recommended per meal. You should take 27 grams per day, but careful, your meal already has {value_satfat} grams of saturated fat!'
+    if df['fat_total_g'][0]>(65/4):
+        value_fat = round(df["fat_total_g"][0]/0.25,ndigits=2)
+        f':warning: Total fat: You are having more than the total fat levels recommended per meal. You should take 88 grams  per day, but careful, your meal already has {value_fat} grams of fat! '
+    if df['calories'][0]>(2000/4):
+        value = round(df["calories"][0],ndigits=2)
+        f':warning: Calories: You are having more than the calories levels recommended per meal. You should take 675 calories per meal if you are making 4 meals per day. "'
+    if df['cholesterol_mg'][0]>(0.3/4):
+        value_chol = round(df["cholesterol_mg"][0]/0.25,ndigits=2)
+        f':warning: Cholesterol: You are having more than the cholesterol levels recommended per meal. You should take 0.3 grams  per day, but careful, your meal already has {value_chol} grams of cholesterol! '
+    if df['protein_g'][0]>(50/4):
+        value_protein = round(df["protein_g"][0],ndigits=2)
+        f':warning:  Protein: You are having more than the protein levels recommended per meal. You should take 63g  per day, but your meal already has {value_protein} grams of protein.'
+    if df['carbohydrates_total_g'][0]>(304/4):
+        value_carbs = round(df["carbohydrates_total_g"][0],ndigits=2)
+        f':warning: Carbohydrates: You are having more than the carbohydrate levels recommended per meal. You should take 410g  per day, but your meal already has {value_carbs} grams of protein.'
     else:
         'The rest of the levels are just ok :muscle:!'
 
@@ -268,12 +343,27 @@ def warnings_women(df):
 #
 #st.image(url, width=None, use_column_width=None, clamp=False, channels='RGB', output_format='auto')
 
+# Downloading model on cache
+model = download_model()
+# Sidebar with project info
+about = st.sidebar.header(
+    'About')
+about_text = st.sidebar.write('Food detective is a app build in Streamlit and HerokuApp running a machine learning model')
+calorie_ninjas = st.sidebar.header(
+    'Calories')
+calorie_ninjas_text = st.sidebar.write('We use the [calorie ninjas](https://calorieninjas.com/api) API to check the amount of calories that 100 gr of the food in the photo contain')
+calorie_ninjas_logo = st.sidebar.markdown(
+    '![](https://i.ibb.co/gg2k4LK/CN.jpg)')
 
-
+# Main function
 st.title('''Hi! Welcome to Food Detective :green_salad: :mag: :eyes:''')
 st.subheader('Upload a photo of your meal to know about its nutritional information!:memo:')
-st.text('Please complete your gender first:')
-gender = st.radio('Gender:',('Select','Male', 'Female'))
+st.text('First we need some personal information:')
+
+gender = st.radio('Gender:',('Male', 'Female'))
+
+age = st.slider('Age:', 0, 100, 15)
+weight = st.text_input('Weight (kg):', '')
 
 
 with st.beta_expander("Search image..."):
@@ -290,7 +380,6 @@ with st.beta_expander("Search image..."):
         imagen = preprocessing_func(imagen)
         #linea para hace predict
         with st.spinner('Please wait! We are inspecting your meal...'):
-            model = download_model()
             category_name_sample = predict_category(model,imagen)
             api_info = get_api_info(category_name_sample)
             api_info_text = get_api_info(category_name_sample)
@@ -302,8 +391,9 @@ with st.beta_expander("Search image..."):
         f'**{category_name_sample}**!'
         f'Is it actually **{category_name_sample}** ?'
         
-        yesno = st.empty()
-        value = yesno.radio('',('','Yes', 'No'))
+        # yesno = st.empty()
+
+        value = st.radio('',('','Yes', 'No'))
 
         if value == 'No':
             'That is too bad! :cry:'
@@ -313,48 +403,62 @@ with st.beta_expander("Search image..."):
                 st.stop()
             
             if gender == 'Female':
-                "Here's the nutritional information for your meal"
-                api_info = get_api_info(real_category)
-                api_info_text = get_api_info(real_category)
-                df_api = json.loads(api_info_text)
-                api_info = convert_data(df_api)
-                api_info_transformed = add_statement(api_info)
-                api_info_transformed
-                warnings_women(df_api)
-            
+                if age > 50:
+                    "Here's the nutritional information for your meal"
+                    api_info = get_api_info(real_category)
+                    api_info_text = get_api_info(real_category)
+                    df_api = json.loads(api_info_text)
+                    api_info = convert_data(df_api)
+                    api_info_transformed = add_statement(api_info)
+                    api_info_transformed
+                    warnings_women_old(df_api)
+                if age < 50:
+                    "Here's the nutritional information for your meal"
+                    api_info = get_api_info(real_category)
+                    api_info_text = get_api_info(real_category)
+                    df_api = json.loads(api_info_text)
+                    api_info = convert_data(df_api)
+                    api_info_transformed = add_statement(api_info)
+                    api_info_transformed
+                    warnings_women_young(df_api)
+                    
             if gender == 'Male':
-                "Here's the nutritional information for your meal"
-                api_info = get_api_info(real_category)
-                api_info_text = get_api_info(real_category)
-                df_api = json.loads(api_info_text)
-                api_info = convert_data(df_api)
-                api_info_transformed = add_statement(api_info)
-                api_info_transformed
-                warnings_men(df_api)
+                if age > 50:
+                    "Here's the nutritional information for your meal"
+                    api_info = get_api_info(real_category)
+                    api_info_text = get_api_info(real_category)
+                    df_api = json.loads(api_info_text)
+                    api_info = convert_data(df_api)
+                    api_info_transformed = add_statement(api_info)
+                    api_info_transformed
+                    warnings_men_old(df_api)
+                if age < 50:
+                    "Here's the nutritional information for your meal"
+                    api_info = get_api_info(real_category)
+                    api_info_text = get_api_info(real_category)
+                    df_api = json.loads(api_info_text)
+                    api_info = convert_data(df_api)
+                    api_info_transformed = add_statement(api_info)
+                    api_info_transformed
+                    warnings_men_young(df_api)
 
         if value == 'Yes':
-            "That is awsome :sweat_smile: Let's inspect its nutritional information!"
+            "That is awesome :sweat_smile: Let's inspect its nutritional information!"
             if gender == 'Female':
-                api_info_transformed
-                warnings_women(df_api)
+                if age > 50:
+                    api_info_transformed
+                    warnings_women_old(df_api)
+                if age < 50:
+                    api_info_transformed
+                    warnings_women_young(df_api)
 
             if gender == 'Male':
-                api_info_transformed
-                warnings_men(df_api)
+                if age > 50:
+                    api_info_transformed
+                    warnings_men_old(df_api)
+                if age < 50:
+                    api_info_transformed
+                    warnings_men_young(df_api)
 
-def setupUI():
-    pass
 
-def waitUploadImage():
-    pass
 
-def predict():
-    pass
-
-def main():
-    setupUI()
-    waitUploadImage()
-    predict()
-    pass
-
-main()
