@@ -1,6 +1,7 @@
 import streamlit as st
 from PIL import Image
 import requests
+import h5py
 import numpy as np
 from tensorflow.keras import models
 from tensorflow.keras.preprocessing.image import load_img
@@ -134,7 +135,7 @@ def preprocessing_func(image):
 
 def download_model():
     """Function that downloads the model"""
-    path = 'ResNET_acc32'
+    path = 'EfficientNet_acc39.h5'
     model_1 = models.load_model(path)
     return model_1
 
@@ -157,7 +158,6 @@ def get_api_info(category_name_sample):
     else:
         print("Error:", response.status_code, response.text)
 
-    print(response.text)
 
 def convert_data(api_info):
     df = pd.DataFrame.from_dict(api_info['items'][0], orient='index').T
@@ -169,80 +169,118 @@ def convert_data(api_info):
                 'Cholesterol', 'Protein', 'TotalCarbohydrates']
     return df
 
-def add_statement(df):     
-  Sugar = df['Sugar'][0]
-  Fiber = df['Fiber'][0]
-  Serving_Size = df['Serving Size'][0]
-  Sodium = df['Sodium'][0]
-  Potassium = df['Potassium'][0]
-  Fat_Saturated = df['Fat Saturated'][0]
-  Fat_Total = df['Fat Total'][0]
-  Cholesterol = df['Cholesterol'][0]
-  Protein = df['Protein'][0]
-  TotalCarbohydrates = df['TotalCarbohydrates'][0]
-  df['Sugar'] = f'{Sugar}g'
-  df['Fiber'] = f'{Fiber}g'
-  df['Serving Size'] = f'{Serving_Size}g'
-  df['Sodium'] = f'{Sodium}mg'
-  df['Potassium'] = f'{Potassium}mg'
-  df['Fat Saturated'] = f'{Fat_Saturated}g'
-  df['Fat Total'] = f'{Fat_Total}g'
-  df['Cholesterol'] = f'{Cholesterol}g'
-  df['Protein'] = f'{Protein}g'
-  df['TotalCarbohydrates'] = f'{TotalCarbohydrates}g'
-  df = df.drop(columns = 'Name')
-  df_t = df.T
-  df_t.columns = ['Amount per Portion'] 
-  return df_t
+def add_statement(df):
+    Sugar = df['Sugar'][0]
+    Fiber = df['Fiber'][0]
+    Serving_Size = df['Serving Size'][0]
+    Sodium = df['Sodium'][0]
+    Potassium = df['Potassium'][0]
+    Fat_Saturated = df['Fat Saturated'][0]
+    Fat_Total = df['Fat Total'][0]
+    Cholesterol = df['Cholesterol'][0]
+    Protein = df['Protein'][0]
+    TotalCarbohydrates = df['TotalCarbohydrates'][0]
+    df['Sugar'] = f'{Sugar}g'
+    df['Fiber'] = f'{Fiber}g'
+    df['Serving Size'] = f'{Serving_Size}g'
+    df['Sodium'] = f'{Sodium}mg'
+    df['Potassium'] = f'{Potassium}mg'
+    df['Fat Saturated'] = f'{Fat_Saturated}g'
+    df['Fat Total'] = f'{Fat_Total}g'
+    df['Cholesterol'] = f'{Cholesterol}g'
+    df['Protein'] = f'{Protein}g'
+    df['TotalCarbohydrates'] = f'{TotalCarbohydrates}g'
+    df_t = df.T
+    df_t.columns = ['']
+    return df_t
 
-def warnings(df):
+def warnings_men(df):
     df = pd.DataFrame.from_dict(df['items'][0], orient='index').T
-    if df['sugar_g'][0]>50:
-        value = round(df["sugar_g"][0]/0.25,ndigits=2)
-        st.error(f"This food contains {value}% of the daily sugar intake")
-    elif df['fiber_g'][0]>50:
+    if df['sugar_g'][0]>(36/4):
+        value = round(df["sugar_g"][0],ndigits=2)
+        ":warning: Attention! You are having more than the sugar levels recommended per meal "
+    if df['fiber_g'][0]>(38/4):
         value = round(df["fiber_g"][0]/0.25,ndigits=2)
-        st.error(f"This food contains {value}% of the daily fiber intake")
-    elif df['serving_size_g'][0]>50:
-        value = round(df["serving_size_g"][0]/0.25,ndigits=2)
-        st.error(f"This food contains {value}% of the daily serving size intake")
-    elif df['sodium_mg'][0]>50:
+        ":warning: Attention! You are having more than the fiber levels recommended per meal "
+    if df['sodium_mg'][0]>(2.3/4):
         value = round(df["sodium_mg"][0]/0.25,ndigits=2)
-        st.error(f"This food contains {value}% of the daily sodium intake")
-    elif df['potassium_mg'][0]>50:
+        ":warning: Attention! You are having more than the sodium levels recommended per meal "
+    if df['potassium_mg'][0]>(4.7/4):
         value = round(df["potassium_mg"][0]/0.25,ndigits=2)
-        st.error(f"This food contains {value}% of the daily potassium intake")
-    elif df['fat_saturated_g'][0]>50:
+        ":warning: Attention! You are having more than the potassium levels recommended per meal "
+    if df['fat_saturated_g'][0]>(22/4):
         value = round(df["fat_saturated_g"][0]/0.25,ndigits=2)
-        st.error(f"This food contains {value}% of the daily fat saturated intake")
-    elif df['fat_total_g'][0]>50:
+        ":warning: Attention! You are having more than the saturated fat levels recommended per meal "
+    if df['fat_total_g'][0]>(77/4):
         value = round(df["fat_total_g"][0]/0.25,ndigits=2)
-        st.error(f"This food contains {value}% of the daily total fat intake")
-    elif df['calories'][0]>50:
+        ":warning: Attention! You are having more than the total fat levels recommended per meal "
+    if df['calories'][0]>(2500/4):
         value = round(df["calories"][0]/0.25,ndigits=2)
-        st.error(f"This food contains {value}% of the daily calories intake")
-    elif df['cholesterol_mg'][0]>50:
+        ":warning: Attention! You are having more than the calories levels recommended per meal "
+    if df['cholesterol_mg'][0]>(0.3/4):
         value = round(df["cholesterol_mg"][0]/0.25,ndigits=2)
-        st.error(f"This food contains {value}% of the daily cholesterol intake")
-    elif df['protein_g'][0]>50:
-        value = round(df["protein_g"][0]/0.25,ndigits=2)
-        st.error(f"This food contains {value}% of the daily protein intake")
-    elif df['carbohydrates_total_g'][0]>50:
+        ":warning: Attention! You are having more than the cholesterol level recommended per meal "
+#    if df['protein_g'][0]>(0.8*weight/2):
+#        value = round(df["protein_g"][0]/0.25,ndigits=2)
+#        st.error(f"Attention! You are having more than the protein levels recommended per meal ")
+    if df['carbohydrates_total_g'][0]>(300/4):
         value = round(df["carbohydrates_total_g"][0]/0.25,ndigits=2)
-        st.error(f"This food contains {value}% of the daily total carbohydrates intake")
+        ":warning: Attention! You are having more than the carbohydrate levels recommended per meal "
     else:
-        st.success('This is a success!')
+        'The rest of the levels are just ok :muscle:!'
 
-url = 'https://res.cloudinary.com/sanitarium/image/fetch/q_auto/https://www.sanitarium.com.au/getmedia%2Fae51f174-984f-4a70-ad3d-3f6b517b6da1%2Ffruits-vegetables-healthy-fats.jpg%3Fwidth%3D1180%26height%3D524%26ext%3D.jpg'
+def warnings_women(df):
+    df = pd.DataFrame.from_dict(df['items'][0], orient='index').T
+    if df['sugar_g'][0]>(25/4):
+        value = round(df["sugar_g"][0],ndigits=2)
+        ":warning: Attention! You are having more than the sugar levels recommended per meal "
+    if df['fiber_g'][0]>25/4:
+        value = round(df["fiber_g"][0]/0.25,ndigits=2)
+        ":warning: Attention! You are having more than the fiber levels recommended per meal "
+    if df['sodium_mg'][0]>(2.3/4):
+        value = round(df["sodium_mg"][0]/0.25,ndigits=2)
+        ":warning: Attention! You are having more than the sodium levels recommended per meal "
+    if df['potassium_mg'][0]>(4.7/4):
+        value = round(df["potassium_mg"][0]/0.25,ndigits=2)
+        ":warning: Attention! You are having more than the potassium levels recommended per meal "
+    if df['fat_saturated_g'][0]>(22/4):
+        value = round(df["fat_saturated_g"][0]/0.25,ndigits=2)
+        ":warning: Attention! You are having more than the saturated fat levels recommended per meal "
+    if df['fat_total_g'][0]>(77/4):
+        value = round(df["fat_total_g"][0]/0.25,ndigits=2)
+        ":warning: Attention! You are having more than the total fat levels recommended per meal "
+    if df['calories'][0]>(2000/4):
+        value = round(df["calories"][0]/0.25,ndigits=2)
+        ":warning: Attention! You are having more than the calories levels recommended per meal "
+    if df['cholesterol_mg'][0]>(0.3/4):
+        value = round(df["cholesterol_mg"][0]/0.25,ndigits=2)
+        ":warning: Attention! You are having more than the cholesterol level recommended per meal "
+#    if df['protein_g'][0]>():
+#        value = round(df["protein_g"][0]/0.25,ndigits=2)
+#        st.error(f"Attention! You are having more than the protein levels recommended per meal ")
+    if df['carbohydrates_total_g'][0]>(300/4):
+        value = round(df["carbohydrates_total_g"][0]/0.25,ndigits=2)
+        ":warning: Attention! You are having more than the carbohydrate levels recommended per meal "
+    else:
+        'The rest of the levels are just ok :muscle:!'
 
-st.image(url, width=None, use_column_width=None, clamp=False, channels='RGB', output_format='auto')
-st.markdown('''# Hi! Welcome to Food Detective :green_salad: :mag: :eyes:''')
-'Upload a photo of your meal to know about its nutritional information!'
+#url = 'https://res.cloudinary.com/sanitarium/image/fetch/q_auto/https://www.sanitarium.com.au/getmedia%2Fae51f174-984f-4a70-ad3d-3f6b517b6da1%2Ffruits-vegetables-healthy-fats.jpg%3Fwidth%3D1180%26height%3D524%26ext%3D.jpg'
+#
+#st.image(url, width=None, use_column_width=None, clamp=False, channels='RGB', output_format='auto')
+
+
+
+st.title('''Hi! Welcome to Food Detective :green_salad: :mag: :eyes:''')
+st.subheader('Upload a photo of your meal to know about its nutritional information!:memo:')
+st.text('Please complete your gender first:')
+gender = st.radio('Gender:',('Select','Male', 'Female'))
+
 
 with st.beta_expander("Search image..."):
     uploaded_file = st.file_uploader("Choose an image...", type=['png', 'jpg', 'jpeg'])
 
     if uploaded_file is not None:
+        
         imagen = Image.open(uploaded_file)
         st.image(imagen, use_column_width=True)
         new_width  = 64
@@ -251,16 +289,72 @@ with st.beta_expander("Search image..."):
         st.write("")
         imagen = preprocessing_func(imagen)
         #linea para hace predict
-        with st.spinner('Please wait! We are classifying your meal...'):
-            time.sleep(5)
+        with st.spinner('Please wait! We are inspecting your meal...'):
             model = download_model()
+            category_name_sample = predict_category(model,imagen)
+            api_info = get_api_info(category_name_sample)
+            api_info_text = get_api_info(category_name_sample)
+            df_api = json.loads(api_info_text)
+            api_info = convert_data(df_api)
+            api_info_transformed = add_statement(api_info)
         st.success(':white_check_mark: Done! You are having...')
-        category_name_sample = predict_category(model,imagen)
+        
         f'**{category_name_sample}**!'
-        api_info_text = get_api_info(category_name_sample)
-        df_api = json.loads(api_info_text)
-        api_info = convert_data(df_api)
-        api_info_transformed = add_statement(api_info)
-        st.write(api_info_transformed)
-        warnings(df_api)
+        f'Is it actually **{category_name_sample}** ?'
+        
+        yesno = st.empty()
+        value = yesno.radio('',('','Yes', 'No'))
 
+        if value == 'No':
+            'That is too bad! :cry:'
+            'Please let us know what your meal is and we will use this information to keep on learning!'
+            real_category = st.text_input('Please enter your meal name here please:', value='')
+            if not real_category:
+                st.stop()
+            
+            if gender == 'Female':
+                "Here's the nutritional information for your meal"
+                api_info = get_api_info(real_category)
+                api_info_text = get_api_info(real_category)
+                df_api = json.loads(api_info_text)
+                api_info = convert_data(df_api)
+                api_info_transformed = add_statement(api_info)
+                api_info_transformed
+                warnings_women(df_api)
+            
+            if gender == 'Male':
+                "Here's the nutritional information for your meal"
+                api_info = get_api_info(real_category)
+                api_info_text = get_api_info(real_category)
+                df_api = json.loads(api_info_text)
+                api_info = convert_data(df_api)
+                api_info_transformed = add_statement(api_info)
+                api_info_transformed
+                warnings_men(df_api)
+
+        if value == 'Yes':
+            "That is awsome :sweat_smile: Let's inspect its nutritional information!"
+            if gender == 'Female':
+                api_info_transformed
+                warnings_women(df_api)
+
+            if gender == 'Male':
+                api_info_transformed
+                warnings_men(df_api)
+
+def setupUI():
+    pass
+
+def waitUploadImage():
+    pass
+
+def predict():
+    pass
+
+def main():
+    setupUI()
+    waitUploadImage()
+    predict()
+    pass
+
+main()
