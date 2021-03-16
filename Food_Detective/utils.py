@@ -2,6 +2,7 @@
 
 ## Library imports
 import streamlit as st
+from tensorflow import lite
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.applications.resnet import preprocess_input
 from tensorflow.keras import models
@@ -10,30 +11,64 @@ from Food_Detective.params import categories
 import numpy as np
 import pandas as pd
 import requests
+from PIL import Image
+import os
+
+# @st.cache(allow_output_mutation=True, show_spinner=False)
+# def download_model():
+#     """Function that downloads the model"""
+#     path = 'EfficientNet_acc39.h5'
+#     model = models.load_model(path)
+#     model.make_predict_function()
+#     return model
+
+# def preprocessing_func(image):
+#     '''Function that preprocesses the input'''
+#     preproc_img = img_to_array(image)
+#     preproc_img = np.expand_dims(preproc_img, axis = 0)
+#     preproc_img = preprocess_input(preproc_img)
+#     return preproc_img
 
 
 
-def preprocessing_func(image):
-    '''Function that preprocesses the input'''
-    preproc_img = img_to_array(image)
-    preproc_img = np.expand_dims(preproc_img, axis = 0)
-    preproc_img = preprocess_input(preproc_img)
-    return preproc_img
+
+
+# def predict_category(model,image):
+#     """Function that predicts the category of the image"""
+#     prediction = model.predict(image)
+#     category_sample = np.argmax(prediction)
+#     category_name_sample = categories[category_sample]
+#     category_name_sample = category_name_sample.decode('UTF-8').capitalize().replace("_", " ")
+#     return category_name_sample
 
 @st.cache(allow_output_mutation=True, show_spinner=False)
 def download_model():
     """Function that downloads the model"""
-    path = 'EfficientNet_acc39.h5'
-    model = models.load_model(path)
-    model.make_predict_function()
-    return model
+    path = os.path.join(os.getcwd(), 'model-export-tflite/model.tflite')
+    interpreter = lite.Interpreter(model_path=path)
+    interpreter.allocate_tensors()
+    return interpreter
 
-def predict_category(model,image):
+def preprocessing_func(image, interpreter):
+    '''Function that preprocesses the input'''
+    input_details = interpreter.get_input_details()
+    height = input_details[0]['shape'][1]
+    width = input_details[0]['shape'][2]
+    img = image.resize((width, height))
+    input_data = np.expand_dims(img, axis=0)
+    return input_data
+
+
+def predict_category(interpreter, input_data):
     """Function that predicts the category of the image"""
-    prediction = model.predict(image)
-    category_sample = np.argmax(prediction)
-    category_name_sample = categories[category_sample]
-    category_name_sample = category_name_sample.decode('UTF-8').capitalize().replace("_", " ")
+    input_details = interpreter.get_input_details()
+    output_details = interpreter.get_output_details()
+    interpreter.set_tensor(input_details[0]['index'], input_data)
+    interpreter.invoke()
+    output_data = interpreter.get_tensor(output_details[0]['index'])
+    results = np.squeeze(output_data)
+    category_name_sample = categories[np.argmax(results)][0]
+    category_name_sample = category_name_sample.capitalize().replace("_", " ")
     return category_name_sample
 
 def get_api_info(category_name_sample):

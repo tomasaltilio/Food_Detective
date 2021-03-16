@@ -12,7 +12,7 @@ import json
 st.write(f'<style>{background_image}</style>', unsafe_allow_html=True)
 
 # Downloading model on cache
-model = download_model()
+interpreter = download_model()
 
 # Main section
 st.title('''Hi! Welcome to Food Detective :green_salad: :mag: :eyes:''')
@@ -40,16 +40,13 @@ with st.beta_expander("Search image..."):
 
     if uploaded_file is not None:
         # Preprocessing image
-        imagen = Image.open(uploaded_file)
-        st.image(imagen, use_column_width=True)
-        new_width  = 64
-        new_height = 64
-        imagen = imagen.resize((new_width, new_height), Image.ANTIALIAS)
+        image = Image.open(uploaded_file)
+        st.image(image, use_column_width=True)
         st.write("")
-        imagen = preprocessing_func(imagen)
+        input_data = preprocessing_func(image, interpreter)
         # Prediction with loader
         with st.spinner('Please wait! We are inspecting your meal...'):
-            category_name_sample = predict_category(model,imagen)
+            category_name_sample = predict_category(interpreter, input_data)
             api_info = get_api_info(category_name_sample)
             api_info_text = get_api_info(category_name_sample)
             df_api = json.loads(api_info_text)
