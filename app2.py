@@ -11,7 +11,6 @@ import json
 # Background image
 st.write(f'<style>{background_image}</style>', unsafe_allow_html=True)
 
-
 # Downloading model on cache
 model = download_model()
 
@@ -70,45 +69,31 @@ with st.beta_expander("Search image..."):
             real_category = st.text_input('Your food:', value='')
             if not real_category:
                 st.stop()
-            
+                
+            api_info = get_api_info(real_category)
+            api_info_text = get_api_info(real_category)
+            df_api = json.loads(api_info_text)
+            api_info = convert_data(df_api)
+            api_info_transformed = add_statement(api_info)
+
             if gender == 'Female':
                 if age > 50:
                     "Here's the nutritional information for your meal"
-                    api_info = get_api_info(real_category)
-                    api_info_text = get_api_info(real_category)
-                    df_api = json.loads(api_info_text)
-                    api_info = convert_data(df_api)
-                    api_info_transformed = add_statement(api_info)
                     api_info_transformed
                     warnings_women_old(df_api)
                     
                 if age < 50:
                     "Here's the nutritional information for your meal"
-                    api_info = get_api_info(real_category)
-                    api_info_text = get_api_info(real_category)
-                    df_api = json.loads(api_info_text)
-                    api_info = convert_data(df_api)
-                    api_info_transformed = add_statement(api_info)
                     api_info_transformed
                     warnings_women_young(df_api)
                     
             if gender == 'Male':
                 if age > 50:
                     "Here's the nutritional information for your meal"
-                    api_info = get_api_info(real_category)
-                    api_info_text = get_api_info(real_category)
-                    df_api = json.loads(api_info_text)
-                    api_info = convert_data(df_api)
-                    api_info_transformed = add_statement(api_info)
                     api_info_transformed
                     warnings_men_old(df_api)
                 if age < 50:
                     "Here's the nutritional information for your meal"
-                    api_info = get_api_info(real_category)
-                    api_info_text = get_api_info(real_category)
-                    df_api = json.loads(api_info_text)
-                    api_info = convert_data(df_api)
-                    api_info_transformed = add_statement(api_info)
                     api_info_transformed
                     warnings_men_young(df_api)
 
