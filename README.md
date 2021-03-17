@@ -10,6 +10,7 @@
 * [Technologies](#technologies)
 * [Project description](#project-description)
 * [Site](#site)
+* [Bug / Feature Request](#bug-/-feature-request)
 
 
 ## General Info
@@ -68,7 +69,7 @@ Therefore we used Calorie Ninjas, an API that contains free nutrition data for 1
 ### Models trained
 
 We started using different pretrained models such as **VGG16, Mobilenet, DenseNet, Resnet50** and **EfficientNet**.
-Eventhough we modified them in order to get higher accuracies, we weren't so lucky because we still had low accuracy rates, between 20% and 39%.
+Eventhough we modified them in order to get higher accuracies, we weren't so lucky. We obtained low accuracy rates, between 20% and 39%.
 
 We decided then to try **Google Cloud AutoML Vision**, a Google Cloud's tool that allows you to derive insights from object detection and image classification, in the cloud or at the edge. 
 
@@ -90,7 +91,7 @@ Here we have some of the results obtained.
 
 ### Building the app
 
-In order to let anyone use this application, we decided to deploy it in Heroku, a cloud Platform As a Service that allows us to develop, run, and manage the application without the complexity of building and maintaining the infrastructure typically associated with developing and launching an app.
+In order to let anyone use this application, we decided to deploy it on Heroku, a cloud Platform As a Service that allows us to develop, run, and manage the application without the complexity of building and maintaining the infrastructure typically associated with developing and launching an app.
 
 
 ### Visualisation 
