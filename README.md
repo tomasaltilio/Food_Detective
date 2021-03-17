@@ -1,18 +1,25 @@
 # Food Detective :green_salad: :mag: :eyes:
+ 
+ An app that recognizes the food on your dish and provides its nutritional information along with warnings about the daily intake of each nutrient present in the food.
 
 
 ## Table of contents
 * [General info](#general-info)
-* [Demo](#demo)
+* [Demo](#demo-:rocket:)
 * [Technologies](#technologies)
 * [Project description](#project-description)
 * [Site](#site)
 
 
-
 ## General Info
 
-The purpose of this project was to create an app that recognizes the food on your dish and provides its nutritional information along with warnings about the daily intake of each nutrient present in the food.
+This project was made to present as the Final Project of the LeWagon's DataScience Bootcamp (Batch 561). The purpose of this project remains on bringing together all the components learnt during the bootcamp on a real open-ended problem in teams.
+
+Did you ever wanted to check how healthy is the food you are about to eat? Did you quickly resign on the idea after realizing it takes a lot of time?
+This is what we asked ourselves, and we came up with this idea! How about you upload an image of what you are about to eat and get its nutritional information immediatly? 
+Let's checkout how we solved it! :rocket:
+
+
 
 ## Demo :rocket:
 
@@ -32,13 +39,13 @@ Project was created with:
 
 ### Data source
 
-To carry out the project we used the kaggle's dataset Food 101. It contains 1000 images of 101 different categories of food, giving a total of 100 000 images. 
+To carry out the project we used the Kaggle's dataset Food 101. It contains 1000 images of 101 different food categories, giving a total of 100 000 images. 
 
 ![Data](./images/kaggle.png)
 
 The images were presented in different ways:
 
-* All together in in different folders divided by food category 
+* All together in in different folders divided by the food category 
 * .h5 files of different image sizes
 
 One of the project's objectives was to link the food in the image with its nutritional information.
@@ -51,7 +58,7 @@ Therefore we used the API Calorie Ninjas, that contains free nutrition data for 
 ### Models trained
 
 We started using different pretrained models such as **VGG16, Mobilenet, DenseNet, Resnet50** and **EfficientNet**.
-Eventhough we modified them in order to get higher accuracies, we weren't so lucky because the accuracy rate was still extremely low, between 20% and 39%.
+Eventhough we modified them in order to get higher accuracies, we weren't so lucky because we still had low accuracy rates, between 20% and 39%.
 
 We decided then to try **Google Cloud AutoML Vision**, a Google Cloud's tool that allows you to derive insights from object detection and image classification, in the cloud or at the edge. 
 
