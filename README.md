@@ -1,6 +1,6 @@
 # Food Detective :green_salad: :mag: :eyes:
  
- Food Detective is an app that recognizes the food on your dish by uploading an image, and provides the user its nutritional information along with warnings about the daily intake of each nutrient present in the food.
+ Food Detective is an app that recognizes the food on your dish by uploading an image and provides the user its nutritional information along with warnings about the daily intake of each nutrient present in the food.
 
 
 ## Table of contents
@@ -16,9 +16,9 @@
 This project was made to present as the Final Project of the LeWagon's DataScience Bootcamp (Batch 561). 
 Its purpose remains on bringing together all the components learnt during the bootcamp on a real open-ended problem.
 
-:green_salad: :yum: Did you ever wanted to know how healthy is the food you are about to eat? 
+🤔 Did you ever wanted to know how healthy is the food you are about to eat? 
 
-:sleepy:  Did you quickly resign on the idea after realizing it takes a lot of time?
+:sleepy:    Did you quickly resign on the idea after realizing it takes a lot of time?
 
 This is what we asked ourselves, and we came up with this idea! :bulb:
 
@@ -30,7 +30,7 @@ Let's checkout how we solved it! :rocket:
 
 ## Demo
 
-You can check it out here :point_right: https://the-food-detective.herokuapp.com/
+You can visit the web app here :point_right:    https://the-food-detective.herokuapp.com/
 
 
 ## Technologies
@@ -53,11 +53,11 @@ To carry out the project we used the Kaggle's dataset Food 101. It contains 1000
 The images were presented in different ways:
 
 * All together in different folders according to their food category 
-* .h5 files of different image sizes
+* .h5 files of different size images
 
 One of the project's objectives was to link the food in the image with its nutritional information.
 
-Therefore we used the API Calorie Ninjas, that contains free nutrition data for 100,000+ foods and beverages.
+Therefore we used Calorie Ninjas, an API that contains free nutrition data for 100,000+ foods and beverages.
 
 ![Calorie](./images/calorie.png)
 
@@ -72,6 +72,7 @@ We decided then to try **Google Cloud AutoML Vision**, a Google Cloud's tool tha
 We uploaded the entire dataset to Google Cloud Storage, listed the images and their labels, and trained an AutoML Vision Edge model. 
 
 After a few hours we obtained a model that predicted with **91.7%** accuracy. Impressive right? 🤯
+
 Here we have some of the results obtained. 
 
 
@@ -107,7 +108,6 @@ Complete your personal information :pencil:
 ### Get its nutritional information
 You will get warnings if you are exceeding recommended levels of different nutritional components
 
-![Meal](./images/nutritional.png)
 
 
 
