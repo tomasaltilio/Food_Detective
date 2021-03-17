@@ -17,9 +17,8 @@ background_image = """
     background-size: cover;
     }
     """
-    
+# Radio button default to be empty 
 radio_button = """ div[role="radiogroup"] >  :first-child{
     display: none !important;
     }
     """
-

@@ -40,13 +40,14 @@ weight = st.text_input('Weight (kg):', '')
 about = st.sidebar.header(
     'About')
 about_text = st.sidebar.write(
-    'Food detective is a app build in Streamlit and HerokuApp running a machine learning model')
+    'Food detective is an app built using Streamlit and deployed in Heroku, running a Deep Learning model to recognize and classify food images.')
+food_data = st.sidebar.write(
+    f'The app is able to classify images into 101 different [food categories](https://www.kaggle.com/kmader/food41).')
 calorie_ninjas = st.sidebar.header(
-    'Calories')
+    'Nutrition')
 calorie_ninjas_text = st.sidebar.write(
-    'We use the [calorie ninjas](https://calorieninjas.com/api) API to check the amount of calories that 100 gr of the food in the photo contain')
-calorie_ninjas_logo = st.sidebar.markdown(
-    '![](https://i.ibb.co/gg2k4LK/CN.jpg)')
+    'We use the [calorie ninjas](https://calorieninjas.com/api) API to check nutritional information and give you some health tips')
+
 
 
 # User uploads image
