@@ -10,7 +10,7 @@
 * [Technologies](#technologies)
 * [Project description](#project-description)
 * [Site](#site)
-* [Bug / Feature Request](#bug-/-feature-request)
+* [Bug Feature Request](#bug-/-feature-request)
 
 
 ## General Info
