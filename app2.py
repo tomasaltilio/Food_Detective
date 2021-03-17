@@ -1,7 +1,7 @@
 import streamlit as st
 from PIL import Image
 import requests
-from Food_Detective.params import categories, background_image
+from Food_Detective.params import categories, background_image, radio_button
 from Food_Detective.utils import preprocessing_func, download_model, predict_category,\
     get_api_info, convert_data, add_statement, warnings_men_young, warnings_men_old,\
     warnings_women_old, warnings_women_young
@@ -18,6 +18,9 @@ st.set_page_config(
 # Background image
 st.write(f'<style>{background_image}</style>', unsafe_allow_html=True)
 
+# Setting up radio buttons empty by default
+st.write(f'<style>{radio_button}</style>', unsafe_allow_html=True)
+
 # Downloading model on cache
 interpreter = download_model()
 
@@ -28,9 +31,8 @@ st.subheader(
 st.text('First we need some personal information:')
 
 # User inputs
-gender = st.radio('Gender:', 'Male', 'Female'))
+gender = st.radio('Gender:', ('', 'Male', 'Female'))
 age = st.slider('Age:', 0, 100, 15)
-
 
 weight = st.text_input('Weight (kg):', '')
 

@@ -2,12 +2,12 @@
 import pandas as pd
 import os
 
-## Prediction categories
+# Prediction categories
 path = os.path.join(os.getcwd(), 'model-export-tflite/dict.txt')
 cats = pd.read_csv(path, header=None)
-categories =  cats.values.tolist()
+categories = cats.values.tolist()
 
-## CSS to include background images
+# CSS to include background images
 background_image = """
     h1 {
     color: black;
@@ -18,3 +18,8 @@ background_image = """
     }
     """
     
+radio_button = """ div[role="radiogroup"] >  :first-child{
+    display: none !important;
+    }
+    """
+
