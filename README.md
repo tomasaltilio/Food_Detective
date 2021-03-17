@@ -117,5 +117,5 @@ To visualize the app we used Streamlit, a framework that allows us to turn the d
 ### Team
 
 [![Daniel Cañadas](https://avatars.githubusercontent.com/u/77625064?s=400&u=d06d5bb2d299cfbaf072fae4d9c7abbf1b906ce2&v=4)](https://github.com/dkj1711)  | [![Julieta Hocsman](https://avatars.githubusercontent.com/u/72712108?s=460&u=4fa30b93353b0ca96b50d9cf70b81be90bb8d89e&v=4)](https://github.com/julietahocsman/)  | [![Santiago Caride](https://avatars.githubusercontent.com/u/17711221?s=400&v=4)](https://github.com/carmaiquel/)  | [![Tomas Altilio](https://avatars.githubusercontent.com/u/65192458?s=460&u=0b40d587d88faa7cbeb4353b2c09e61b1c80419b&v=4)](https://github.com/tomasaltilio/)
----|---
+---|---|---|---
 [Daniel Cañadas ](https://github.com/dani) |[Julieta Hocsman](https://github.com/julietahocsman/) |[Santiago Caride](https://github.com/carmaiquel/) |[Tomas Altilio](https://github.com/tomasaltilio/)
