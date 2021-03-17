@@ -29,7 +29,7 @@ interpreter = download_model()
 st.title('''Hi! Welcome to Food Detective :green_salad: :mag: :eyes:''')
 st.subheader(
     'Upload a photo of your meal to know about its nutritional information!:memo:')
-st.text('First we need some personal information:')
+'First we need some personal information:'
 
 # User inputs
 gender = st.radio('Gender:', ('', 'Male', 'Female'))
