@@ -18,9 +18,10 @@ Its purpose remains on bringing together all the components learnt during the bo
 
 :thinking_face: Did you ever wanted to know how healthy is the food you are about to eat? 
 
-:hot_face: Did you quickly resign on the idea after realizing it takes a lot of time?
+:sleepy: Did you quickly resign on the idea after realizing it takes a lot of time?
 
 This is what we asked ourselves, and we came up with this idea! :bulb:
+
 How about you upload an image of what you are about to eat and get its nutritional information immediatly? 
 Let's checkout how we solved it! :rocket:
 
