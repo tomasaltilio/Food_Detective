@@ -1,6 +1,6 @@
 # Food Detective :green_salad: :mag: :eyes:
  
- An app that recognizes the food on your dish and provides its nutritional information along with warnings about the daily intake of each nutrient present in the food.
+ Food Detective is an app that recognizes the food on your dish by uploading an image, and provides the user its nutritional information along with warnings about the daily intake of each nutrient present in the food.
 
 
 ## Table of contents
