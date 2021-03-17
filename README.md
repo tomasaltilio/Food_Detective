@@ -5,7 +5,7 @@
 
 ## Table of contents
 * [General info](#general-info)
-* [Demo](#demo-:rocket:)
+* [Demo](#demo)
 * [Technologies](#technologies)
 * [Project description](#project-description)
 * [Site](#site)
@@ -15,13 +15,16 @@
 
 This project was made to present as the Final Project of the LeWagon's DataScience Bootcamp (Batch 561). The purpose of this project remains on bringing together all the components learnt during the bootcamp on a real open-ended problem in teams.
 
-Did you ever wanted to check how healthy is the food you are about to eat? Did you quickly resign on the idea after realizing it takes a lot of time?
-This is what we asked ourselves, and we came up with this idea! How about you upload an image of what you are about to eat and get its nutritional information immediatly? 
+Did you ever wanted to check how healthy is the food you are about to eat? 
+Did you quickly resign on the idea after realizing it takes a lot of time?
+
+This is what we asked ourselves, and we came up with this idea! 
+How about you upload an image of what you are about to eat and get its nutritional information immediatly? 
 Let's checkout how we solved it! :rocket:
 
 
 
-## Demo :rocket:
+## Demo
 
 You can check it out here :point_right: https://the-food-detective.herokuapp.com/
 
