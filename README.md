@@ -8,7 +8,7 @@ Food Detective is an app that recognizes the food on your dish and provides its 
 You can check it out here :point_right: https://the-food-detective.herokuapp.com/
 
 ## Site
-![Landing page](./images/schema.jpg)
+![Landing page](./images/landingpage)
 
 ## Technologies
 Project was created with: 
