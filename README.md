@@ -16,9 +16,9 @@
 This project was made to present as the Final Project of the LeWagon's DataScience Bootcamp (Batch 561). 
 Its purpose remains on bringing together all the components learnt during the bootcamp on a real open-ended problem.
 
-:thinking_face: Did you ever wanted to know how healthy is the food you are about to eat? 
+:green_salad: :yum: Did you ever wanted to know how healthy is the food you are about to eat? 
 
-:sleepy: Did you quickly resign on the idea after realizing it takes a lot of time?
+:sleepy:  Did you quickly resign on the idea after realizing it takes a lot of time?
 
 This is what we asked ourselves, and we came up with this idea! :bulb:
 
