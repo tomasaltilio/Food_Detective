@@ -10,7 +10,7 @@
 * [Technologies](#technologies)
 * [Project description](#project-description)
 * [Site](#site)
-* [Bug Feature Request](#bug-feature-request)
+* [Bug Or Feature Request](#bug-or-feature-request)
 
 
 ## General Info
@@ -113,7 +113,7 @@ Complete your personal information :pencil:
 You will get warnings if you are exceeding recommended levels of different nutritional components
 
 
-## Bug / Feature Request
+## Bug Or Feature Request
 
 If you find a bug (the website couldn't handle the query and/or gave undesired results), kindly open an issue [here](https://github.com/tomasaltilio/Food_Detective/issues/new) by including your search query and the expected result.
 
