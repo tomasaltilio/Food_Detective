@@ -96,16 +96,13 @@ To visualize the app we used Streamlit, a framework that allows us to turn the d
 
 ## Site
 ### Landing page
+Complete your personal information
 
 ![Landing page](./images/landingpage.png)
 
-### Complete your personal information
-
-![Personal information](./images/personalinfo.png)
-
 ### Upload an image of your meal
 
-![Meal](./images/imageuploaded.png)
+![Meal](./images/uploadedphoto.png)
 
 ### Get its nutritional information
 
