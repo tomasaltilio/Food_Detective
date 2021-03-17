@@ -8,16 +8,20 @@ Food Detective is an app that recognizes the food on your dish and provides its 
 You can check it out here :point_right: https://the-food-detective.herokuapp.com/
 
 ## Site
-Landing page
+### Landing page
+
 ![Landing page](./images/landingpage.png)
 
-Complete your personal information
+### Complete your personal information
+
 ![Personal information](./images/personalinfo.png)
 
-Upload the image of your meal
+### Upload an image of your meal
+
 ![Meal](./images/imageuploaded.png)
 
-Get its nutritional information
+### Get its nutritional information
+
 ![Meal](./images/nutritional.png)
 
 
