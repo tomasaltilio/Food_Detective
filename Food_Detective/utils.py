@@ -54,7 +54,8 @@ def get_api_info(category_name_sample):
     response = requests.get(
         api_url + query, headers={'X-Api-Key': 'Xy0klDLLr8umMOU3GBTv8g==ixVHYHMXsQA3CJT7'})
     if response.status_code == requests.codes.ok:
-        print(response.text)
+        if response.text == '{"items": []}':
+            return 'Error'
         return response.text
     else:
         print("Error:", response.status_code, response.text)
@@ -97,6 +98,7 @@ def add_statement(df):
     df_t = df.T
     df_t.columns = ['']
     return df_t
+
 
 
 def warnings_men_young(df):
