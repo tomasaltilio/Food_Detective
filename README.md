@@ -5,7 +5,7 @@
 
 ## Table of contents
 * [General info](#general-info)
-* [Problem](#problem)
+* [Problem to solve](#problem-to-solve)
 * [Demo](#demo)
 * [Technologies](#technologies)
 * [Project description](#project-description)
@@ -18,7 +18,7 @@ This project was made to present as a Final Project for LeWagon's DataScience Bo
 
 Its purpose remains on bringing together all the components learnt during the bootcamp on a real open-ended problem.
 
-## Problem
+## Problem to solve
 🤔 Did you ever wanted to know how healthy is the food you are about to eat? 
 
 :sleepy:    Did you quickly resign on the idea after realizing it takes a lot of time?
@@ -26,9 +26,7 @@ Its purpose remains on bringing together all the components learnt during the bo
 This is what we asked ourselves, and we came up with this idea! :bulb:
 
 How about you upload an image of what you are about to eat and get its nutritional information immediatly? 
-
 Great idea right? 
-
 Let's checkout how we solved it! :rocket:
 
 
