@@ -4,9 +4,10 @@
 ## Table of contents
 * [General info](#general-info)
 * [Demo](#demo)
-* [Site](#site)
 * [Technologies](#technologies)
 * [Project description](#project-description)
+* [Site](#site)
+
 
 
 ## General Info
@@ -16,23 +17,6 @@ The purpose of this project was to create an app that recognizes the food on you
 ## Demo :rocket:
 
 You can check it out here :point_right: https://the-food-detective.herokuapp.com/
-
-## Site
-### Landing page
-
-![Landing page](./images/landingpage.png)
-
-### Complete your personal information
-
-![Personal information](./images/personalinfo.png)
-
-### Upload an image of your meal
-
-![Meal](./images/imageuploaded.png)
-
-### Get its nutritional information
-
-![Meal](./images/nutritional.png)
 
 
 ## Technologies
@@ -56,8 +40,6 @@ The images were presented in different ways:
 
 * All together in in different folders divided by food category 
 * .h5 files of different image sizes
-
-
 
 One of the project's objectives was to link the food in the image with its nutritional information.
 
@@ -95,6 +77,26 @@ In order to let anyone use this application we deployed it in Heroku, a cloud Pl
 ### Visualisation 
 
 To visualisate the app we used Streamlit, a framework that allows us to turn the data scripts into a shareable web app. 
+
+
+## Site
+### Landing page
+
+![Landing page](./images/landingpage.png)
+
+### Complete your personal information
+
+![Personal information](./images/personalinfo.png)
+
+### Upload an image of your meal
+
+![Meal](./images/imageuploaded.png)
+
+### Get its nutritional information
+
+![Meal](./images/nutritional.png)
+
+
 
 
 ### Team
