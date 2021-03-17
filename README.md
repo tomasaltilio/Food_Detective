@@ -13,9 +13,11 @@
 
 ## General Info
 
-This project was made to present as the Final Project of the LeWagon's DataScience Bootcamp (Batch 561). The purpose of this project remains on bringing together all the components learnt during the bootcamp on a real open-ended problem in teams.
+This project was made to present as the Final Project of the LeWagon's DataScience Bootcamp (Batch 561). 
+Its purpose remains on bringing together all the components learnt during the bootcamp on a real open-ended problem.
 
 Did you ever wanted to check how healthy is the food you are about to eat? 
+
 Did you quickly resign on the idea after realizing it takes a lot of time?
 
 This is what we asked ourselves, and we came up with this idea! 
