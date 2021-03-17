@@ -22,3 +22,12 @@ radio_button = """ div[role="radiogroup"] >  :first-child{
     display: none !important;
     }
     """
+    
+# Removing background image for mobile devices
+responsive = '''
+@media (max-width: 960px) { 
+        body {
+            background-image: none !important; 
+      }
+}
+'''
