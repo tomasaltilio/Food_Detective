@@ -23,6 +23,7 @@ Its purpose remains on bringing together all the components learnt during the bo
 This is what we asked ourselves, and we came up with this idea! :bulb:
 
 How about you upload an image of what you are about to eat and get its nutritional information immediatly? 
+Great idea right? 
 Let's checkout how we solved it! :rocket:
 
 
@@ -51,7 +52,7 @@ To carry out the project we used the Kaggle's dataset Food 101. It contains 1000
 
 The images were presented in different ways:
 
-* All together in in different folders divided by the food category 
+* All together in different folders according to their food category 
 * .h5 files of different image sizes
 
 One of the project's objectives was to link the food in the image with its nutritional information.
@@ -68,8 +69,9 @@ Eventhough we modified them in order to get higher accuracies, we weren't so luc
 
 We decided then to try **Google Cloud AutoML Vision**, a Google Cloud's tool that allows you to derive insights from object detection and image classification, in the cloud or at the edge. 
 
-We uploaded the entire dataset to Google Cloud Storage, listed the images and their labels and trained an AutoML Vision Edge model. 
-After a few hours we obtained a model that predicted with **91.7%** accuracy. Impressive right?
+We uploaded the entire dataset to Google Cloud Storage, listed the images and their labels, and trained an AutoML Vision Edge model. 
+
+After a few hours we obtained a model that predicted with **91.7%** accuracy. Impressive right? 🤯
 Here we have some of the results obtained. 
 
 
@@ -84,12 +86,12 @@ Here we have some of the results obtained.
 
 ### Building the app
 
-In order to let anyone use this application we deployed it in Heroku, a cloud Platform As a Service that allows us to develop, run, and manage the application without the complexity of building and maintaining the infrastructure typically associated with developing and launching an app.
+In order to let anyone use this application, we decided to deploy it in Heroku, a cloud Platform As a Service that allows us to develop, run, and manage the application without the complexity of building and maintaining the infrastructure typically associated with developing and launching an app.
 
 
 ### Visualisation 
 
-To visualisate the app we used Streamlit, a framework that allows us to turn the data scripts into a shareable web app. 
+To visualize the app we used Streamlit, a framework that allows us to turn the data scripts into a shareable web app. 
 
 
 ## Site
@@ -113,3 +115,7 @@ To visualisate the app we used Streamlit, a framework that allows us to turn the
 
 
 ### Team
+
+[![Daniel Cañadas](https://avatars.githubusercontent.com/u/77625064?s=400&u=d06d5bb2d299cfbaf072fae4d9c7abbf1b906ce2&v=4)](https://github.com/dkj1711)  | [![Julieta Hocsman](https://avatars.githubusercontent.com/u/72712108?s=460&u=4fa30b93353b0ca96b50d9cf70b81be90bb8d89e&v=4)](https://github.com/julietahocsman/)  | [![Santiago Caride](https://avatars.githubusercontent.com/u/17711221?s=400&v=4)](https://github.com/carmaiquel/)  | [![Tomas Altilio](https://avatars.githubusercontent.com/u/65192458?s=460&u=0b40d587d88faa7cbeb4353b2c09e61b1c80419b&v=4)](https://github.com/tomasaltilio/)
+---|---
+[Daniel Cañadas ](https://github.com/dani) |[Julieta Hocsman](https://github.com/julietahocsman/) |[Santiago Caride](https://github.com/carmaiquel/) |[Tomas Altilio](https://github.com/tomasaltilio/)
