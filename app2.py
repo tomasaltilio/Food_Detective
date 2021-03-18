@@ -3,8 +3,10 @@ from PIL import Image
 import requests
 from Food_Detective.params import categories, background_image, radio_button, responsive
 from Food_Detective.utils import preprocessing_func, download_model, predict_category,\
-    get_api_info, convert_data, add_statement, warnings_men_young, warnings_men_old,\
-    warnings_women_old, warnings_women_young
+    get_api_info, convert_data, add_statement, warnings_kids_2to3, warnings_women_4to8,\
+    warnings_women_9to13, warnings_women_14to18, warnings_women_19to30, warnings_women_31to50,\
+    warnings_women_morethan51, warnings_men_4to8, warnings_men_9to13, warnings_men_14to18,\
+    warnings_men_19to30, warnings_men_31to50, warnings_men_morethan51
 
 import json
 
@@ -31,25 +33,77 @@ def button(category_name_sample):
             api_info_transformed = add_statement(api_info)
 
         if gender == 'Female':
-            if age > 50:
-                "Here's the nutritional information for your meal"
-                api_info_transformed
-                warnings_women_old(df_api)
-                    
-            if age < 50:
-                "Here's the nutritional information for your meal"
-                api_info_transformed
-                warnings_women_young(df_api)
+                if 2 <= age <= 3:
+                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    api_info_transformed
+                    warnings_kids_2to3(df_api)
+
+                if 4 <= age <= 8:
+                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    api_info_transformed
+                    warnings_women_4to8(df_api)
+
+                if 9 <= age <= 13:
+                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    api_info_transformed
+                    warnings_women_9to13(df_api)
+
+                if 14 <= age <= 18:
+                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    api_info_transformed
+                    warnings_women_14to18(df_api)
+
+                if 19 <= age <= 30:
+                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    api_info_transformed
+                    warnings_women_19to30(df_api)
+
+                if 31 <= age <= 50:
+                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    api_info_transformed
+                    warnings_women_31to50(df_api)
+
+                if age >= 51:
+                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    api_info_transformed
+                    warnings_women_morethan51(df_api)
+
                     
         if gender == 'Male':
-            if age > 50:
-                "Here's the nutritional information for your meal"
-                api_info_transformed
-                warnings_men_old(df_api)
-            if age < 50:
-                "Here's the nutritional information for your meal"
-                api_info_transformed
-                warnings_men_young(df_api)
+                if 2 <= age <= 3:
+                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    api_info_transformed
+                    warnings_kids_2to3(df_api)
+
+                if 4 <= age <= 8:
+                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    api_info_transformed
+                    warnings_men_4to8(df_api)
+
+                if 9 <= age <= 13:
+                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    api_info_transformed
+                    warnings_men_9to13(df_api)
+
+                if 14 <= age <= 18:
+                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    api_info_transformed
+                    warnings_men_14to18(df_api)
+
+                if 19 <= age <= 30:
+                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    api_info_transformed
+                    warnings_men_19to30(df_api)
+
+                if 31 <= age <= 50:
+                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    api_info_transformed
+                    warnings_men_31to50(df_api)
+
+                if age >= 51:
+                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    api_info_transformed
+                    warnings_men_morethan51(df_api)
 
     if value == 'Yes':
         api_info = get_api_info(category_name_sample)
@@ -63,20 +117,76 @@ def button(category_name_sample):
         st.write('''That is awesome :sweat_smile:''')
         st.write('''Let's inspect it's nutritional information!''')
         if gender == 'Female':
-            if age > 50:
-                api_info_transformed
-                warnings_women_old(df_api)
-            if age < 50:
-                api_info_transformed
-                warnings_women_young(df_api)
+                if 2 <= age <= 3:
+                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    api_info_transformed
+                    warnings_kids_2to3(df_api)
+
+                if 4 <= age <= 8:
+                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    api_info_transformed
+                    warnings_women_4to8(df_api)
+
+                if 9 <= age <= 13:
+                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    api_info_transformed
+                    warnings_women_9to13(df_api)
+
+                if 14 <= age <= 18:
+                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    api_info_transformed
+                    warnings_women_14to18(df_api)
+
+                if 19 <= age <= 30:
+                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    api_info_transformed
+                    warnings_women_19to30(df_api)
+
+                if 31 <= age <= 50:
+                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    api_info_transformed
+                    warnings_women_31to50(df_api)
+
+                if age >= 51:
+                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    api_info_transformed
+                    warnings_women_morethan51(df_api)
 
         if gender == 'Male':
-            if age > 50:
-                api_info_transformed
-                warnings_men_old(df_api)
-            if age < 50:
-                api_info_transformed
-                warnings_men_young(df_api)
+                if 2 <= age <= 3:
+                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    api_info_transformed
+                    warnings_kids_2to3(df_api)
+
+                if 4 <= age <= 8:
+                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    api_info_transformed
+                    warnings_men_4to8(df_api)
+
+                if 9 <= age <= 13:
+                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    api_info_transformed
+                    warnings_men_9to13(df_api)
+
+                if 14 <= age <= 18:
+                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    api_info_transformed
+                    warnings_men_14to18(df_api)
+
+                if 19 <= age <= 30:
+                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    api_info_transformed
+                    warnings_men_19to30(df_api)
+
+                if 31 <= age <= 50:
+                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    api_info_transformed
+                    warnings_men_31to50(df_api)
+
+                if age >= 51:
+                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    api_info_transformed
+                    warnings_men_morethan51(df_api)
 
 
 # Site configuration
@@ -119,6 +229,10 @@ calorie_ninjas = st.sidebar.header(
     'Nutrition')
 calorie_ninjas_text = st.sidebar.write(
     'We use the [calorie ninjas](https://calorieninjas.com/api) API to check nutritional information and give you some health tips')
+physician_community_for_responsible_medicine = st.sidebar.write(
+    'We use the research provided by the [medical community for responsible medicine]\
+        (https://www.dietaryguidelines.gov/sites/default/files/2020-12/Dietary_Guidelines_for_Americans_2020-2025.pdf)\
+            to calculate the maximum [calorie intake per meal](https://www.pcrm.org/good-nutrition/nutrition-programs-policies/2020-2025-dietary-guidelines).')
 
 
 
