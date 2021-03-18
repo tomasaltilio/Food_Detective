@@ -112,6 +112,8 @@ Complete your personal information :pencil:
 ### Get its nutritional information
 You will get warnings if you are exceeding recommended levels of different nutritional components
 
+![Warnings](./images/warnings.png)
+
 
 ## Bug Or Feature Request
 
