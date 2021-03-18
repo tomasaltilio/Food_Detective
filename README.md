@@ -69,7 +69,7 @@ Therefore we used Calorie Ninjas, an API that contains free nutrition data for 1
 ### Models trained
 
 We started using different pretrained models such as **VGG16, Mobilenet, DenseNet, Resnet50** and **EfficientNet**.
-Eventhough we modified them in order to get higher accuracies, we weren't so lucky. We obtained low accuracy rates, between 20% and 39%.
+Even though we modified them in order to get higher accuracies, we weren't so lucky. We obtained low accuracy rates, between 20% and 39%.
 
 We decided then to try **Google Cloud AutoML Vision**, a Google Cloud's tool that allows you to derive insights from object detection and image classification, in the cloud or at the edge. 
 
