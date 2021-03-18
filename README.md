@@ -39,7 +39,7 @@ You can visit the web app here :point_right:    https://the-food-detective.herok
 
 ## Technologies
 Project was created with: 
-* Python version:  
+* Python version: 3.8.6
 * Kaggle Dataset Food 101
 * Calorie Ninjas API
 * Heroku
