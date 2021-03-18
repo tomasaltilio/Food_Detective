@@ -107,7 +107,7 @@ Complete your personal information :pencil:
 
 ### Upload an image of your meal 📸
 
-![Meal](./images/uploadedphoto.png)
+![Meal](./images/uploadedphotocake.png)
 
 ### Get its nutritional information
 You will get warnings if you are exceeding recommended levels of different nutritional components
