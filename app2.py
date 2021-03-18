@@ -34,74 +34,74 @@ def button(category_name_sample):
 
         if gender == 'Female':
                 if 2 <= age <= 3:
-                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    f"Here's the nutritional information for 100 grams of **{real_category}**"
                     api_info_transformed
                     warnings_kids_2to3(df_api)
 
                 if 4 <= age <= 8:
-                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    f"Here's the nutritional information for 100 grams of **{real_category}**"
                     api_info_transformed
                     warnings_women_4to8(df_api)
 
                 if 9 <= age <= 13:
-                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    f"Here's the nutritional information for 100 grams of **{real_category}**"
                     api_info_transformed
                     warnings_women_9to13(df_api)
 
                 if 14 <= age <= 18:
-                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    f"Here's the nutritional information for 100 grams of **{real_category}**"
                     api_info_transformed
                     warnings_women_14to18(df_api)
 
                 if 19 <= age <= 30:
-                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    f"Here's the nutritional information for 100 grams of **{real_category}**"
                     api_info_transformed
                     warnings_women_19to30(df_api)
 
                 if 31 <= age <= 50:
-                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    f"Here's the nutritional information for 100 grams of **{real_category}**"
                     api_info_transformed
                     warnings_women_31to50(df_api)
 
                 if age >= 51:
-                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    f"Here's the nutritional information for 100 grams of **{real_category}**"
                     api_info_transformed
                     warnings_women_morethan51(df_api)
 
                     
         if gender == 'Male':
                 if 2 <= age <= 3:
-                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    f"Here's the nutritional information for 100 grams of **{real_category}**"
                     api_info_transformed
                     warnings_kids_2to3(df_api)
 
                 if 4 <= age <= 8:
-                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    f"Here's the nutritional information for 100 grams of **{real_category}**"
                     api_info_transformed
                     warnings_men_4to8(df_api)
 
                 if 9 <= age <= 13:
-                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    f"Here's the nutritional information for 100 grams of **{real_category}**"
                     api_info_transformed
                     warnings_men_9to13(df_api)
 
                 if 14 <= age <= 18:
-                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    f"Here's the nutritional information for 100 grams of **{real_category}**"
                     api_info_transformed
                     warnings_men_14to18(df_api)
 
                 if 19 <= age <= 30:
-                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    f"Here's the nutritional information for 100 grams of **{real_category}**"
                     api_info_transformed
                     warnings_men_19to30(df_api)
 
                 if 31 <= age <= 50:
-                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    f"Here's the nutritional information for 100 grams of **{real_category}**"
                     api_info_transformed
                     warnings_men_31to50(df_api)
 
                 if age >= 51:
-                    f"Here's the nutritional information for your meal for 100 grams of **{real_category}**"
+                    f"Here's the nutritional information for 100 grams of **{real_category}**"
                     api_info_transformed
                     warnings_men_morethan51(df_api)
 
@@ -115,76 +115,76 @@ def button(category_name_sample):
         api_info = convert_data(df_api)
         api_info_transformed = add_statement(api_info)
         st.write('''That is awesome :sweat_smile:''')
-        st.write('''Let's inspect it's nutritional information!''')
+        # st.write('''Let's inspect it's nutritional information!''')
         if gender == 'Female':
                 if 2 <= age <= 3:
-                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    f"Here's the nutritional information for 100 grams of **{category_name_sample}**"
                     api_info_transformed
                     warnings_kids_2to3(df_api)
 
                 if 4 <= age <= 8:
-                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    f"Here's the nutritional information for 100 grams of **{category_name_sample}**"
                     api_info_transformed
                     warnings_women_4to8(df_api)
 
                 if 9 <= age <= 13:
-                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    f"Here's the nutritional information for 100 grams of **{category_name_sample}**"
                     api_info_transformed
                     warnings_women_9to13(df_api)
 
                 if 14 <= age <= 18:
-                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    f"Here's the nutritional information for 100 grams of **{category_name_sample}**"
                     api_info_transformed
                     warnings_women_14to18(df_api)
 
                 if 19 <= age <= 30:
-                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    f"Here's the nutritional information for 100 grams of **{category_name_sample}**"
                     api_info_transformed
                     warnings_women_19to30(df_api)
 
                 if 31 <= age <= 50:
-                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    f"Here's the nutritional information for 100 grams of **{category_name_sample}**"
                     api_info_transformed
                     warnings_women_31to50(df_api)
 
                 if age >= 51:
-                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    f"Here's the nutritional information for 100 grams of **{category_name_sample}**"
                     api_info_transformed
                     warnings_women_morethan51(df_api)
 
         if gender == 'Male':
                 if 2 <= age <= 3:
-                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    f"Here's the nutritional information for 100 grams of **{category_name_sample}**"
                     api_info_transformed
                     warnings_kids_2to3(df_api)
 
                 if 4 <= age <= 8:
-                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    f"Here's the nutritional information for 100 grams of **{category_name_sample}**"
                     api_info_transformed
                     warnings_men_4to8(df_api)
 
                 if 9 <= age <= 13:
-                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    f"Here's the nutritional information for 100 grams of **{category_name_sample}**"
                     api_info_transformed
                     warnings_men_9to13(df_api)
 
                 if 14 <= age <= 18:
-                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    f"Here's the nutritional information for 100 grams of **{category_name_sample}**"
                     api_info_transformed
                     warnings_men_14to18(df_api)
 
                 if 19 <= age <= 30:
-                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    f"Here's the nutritional information for 100 grams of **{category_name_sample}**"
                     api_info_transformed
                     warnings_men_19to30(df_api)
 
                 if 31 <= age <= 50:
-                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    f"Here's the nutritional information for 100 grams of **{category_name_sample}**"
                     api_info_transformed
                     warnings_men_31to50(df_api)
 
                 if age >= 51:
-                    f"Here's the nutritional information for your meal for 100 grams of **{category_name_sample}**"
+                    f"Here's the nutritional information for 100 grams of **{category_name_sample}**"
                     api_info_transformed
                     warnings_men_morethan51(df_api)
 
